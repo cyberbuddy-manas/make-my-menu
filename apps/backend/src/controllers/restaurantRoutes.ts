@@ -5,12 +5,12 @@ import {scrapeMenu} from '../services/zomatoScrapper';
 
 export const onBoardRestaurant = async (req: Request , res: Response) => {
     try {
-        const { user, subDomain, domain, restaurantName, address, menu} = req.body as IRestaurant;
+        const { user, subDomain, restaurantName, address, menu} = req.body as IRestaurant;
         // const user = req.user._id;
         const restaurant = new Restaurant({
             user,
             subDomain,
-            domain,
+            // domain,
             restaurantName,
             address,
             menu,
