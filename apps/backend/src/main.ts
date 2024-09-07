@@ -1,4 +1,6 @@
 import express from 'express';
+import dotenv from 'dotenv';
+dotenv.config({ path: '/home/ubuntu/make-my-menu/apps/backend/' });
 import * as path from 'path';
 import cors from 'cors';
 import bodyParser from 'body-parser';
