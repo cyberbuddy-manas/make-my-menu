@@ -13,6 +13,7 @@ import {
   HomeRoute,
   IntroRoute,
   LoginRoute,
+  MenuRoute,
   onBoardRestaurantRoute,
   OtpRoute,
 } from './util/routes';
@@ -21,6 +22,7 @@ import AxiosInterceptor from './components/AxiosInterceptor';
 import OtpScreen from './screens/OtpScreen';
 import IntroScreen from './screens/IntroScreen';
 import OnBoardRestaurantScreen from './screens/OnBoardRestaurantScreen';
+import MenuScreen from './screens/MenuScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -54,6 +56,7 @@ const AppStack = () => {
         name={onBoardRestaurantRoute}
         component={OnBoardRestaurantScreen}
       />
+      <Stack.Screen name={MenuRoute} component={MenuScreen} />
     </Stack.Navigator>
   );
 };

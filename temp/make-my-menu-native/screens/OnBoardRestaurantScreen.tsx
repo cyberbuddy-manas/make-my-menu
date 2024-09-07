@@ -180,26 +180,28 @@ export default function OnBoardRestaurantScreen() {
             marginBottom: 8,
           }}
         >
-          {domainSuggestions.map((suggestion, index) => (
-            <>
-              {suggestion && (
-                <Button
-                  key={index}
-                  mode="contained"
-                  onPress={() => {
-                    setValues((val) => {
-                      return {
-                        ...val,
-                        subDomain: suggestion,
-                      };
-                    });
-                  }}
-                >
-                  {suggestion}
-                </Button>
-              )}
-            </>
-          ))}
+          {domainSuggestions.map((suggestion, index) => {
+            return (
+              <View key={suggestion}>
+                {suggestion && (
+                  <Button
+                    key={suggestion}
+                    mode="contained"
+                    onPress={() => {
+                      setValues((val) => {
+                        return {
+                          ...val,
+                          subDomain: suggestion,
+                        };
+                      });
+                    }}
+                  >
+                    {suggestion}
+                  </Button>
+                )}
+              </View>
+            );
+          })}
         </View>
 
         <View
