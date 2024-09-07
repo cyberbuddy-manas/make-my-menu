@@ -7,6 +7,8 @@ import HomeScreen from './screens/HomeScreen';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import WithSafeArea from './components/WithSafeArea';
 import {
+  AddMenuItemRoute,
+  AddRestaurantRoute,
   AppStackRoute,
   AuthCheckRoute,
   AuthStackRoute,
@@ -23,6 +25,8 @@ import OtpScreen from './screens/OtpScreen';
 import IntroScreen from './screens/IntroScreen';
 import OnBoardRestaurantScreen from './screens/OnBoardRestaurantScreen';
 import MenuScreen from './screens/MenuScreen';
+import AddRestaurant from './screens/AddRestaurant';
+import AddMenuItem from './screens/AddMenuItem';
 
 const Stack = createNativeStackNavigator();
 
@@ -51,13 +55,15 @@ const AuthStack = () => {
 const AppStack = () => {
   return (
     <Stack.Navigator>
+      <Stack.Screen name={AddMenuItemRoute} component={AddMenuItem} options={{ headerShown: false }} />
+      <Stack.Screen name={AddRestaurantRoute} component={AddRestaurant} options={{ headerShown: false }} />
       <Stack.Screen name={HomeRoute} component={HomeScreen} />
       <Stack.Screen
         name={onBoardRestaurantRoute}
         component={OnBoardRestaurantScreen}
       />
       <Stack.Screen name={MenuRoute} component={MenuScreen} />
-    </Stack.Navigator>
+    </Stack.Navigator >
   );
 };
 
