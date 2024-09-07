@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
-import { KeyboardAvoidingView, ScrollView, View, Image } from 'react-native';
+import { KeyboardAvoidingView, ScrollView, View, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import {
   Button,
   Checkbox,
@@ -14,6 +14,7 @@ import {
 import { useAuthHook } from '../api/hooks';
 import { validateEmail } from '../util/functions';
 import { OtpRoute } from '../util/routes';
+
 
 const initialValues = { email: '', rememeberMe: false };
 const initialErrors = { email: '' };
@@ -30,12 +31,12 @@ export default function LoginScreen() {
     if (!values.email) {
       valid = false;
       setErrors((err) => {
-        return { ...err, email: 'email is required' };
+        return { ...err, email: 'Email is required' };
       });
     } else if (!validateEmail(values.email)) {
       valid = false;
       setErrors((err) => {
-        return { ...err, email: 'invalid email' };
+        return { ...err, email: 'Invalid email' };
       });
     }
 
@@ -47,6 +48,30 @@ export default function LoginScreen() {
       navigation.navigate(OtpRoute, values);
     }
   };
+
+
+  const styles = StyleSheet.create({
+    button: {
+      backgroundColor: '#FC6011',
+      paddingVertical: 15,
+      borderRadius: 12,
+      marginBottom: 30,
+      alignItems: 'center',
+      flexDirection: 'row',
+      justifyContent: 'center',
+      gap: 8,
+      marginTop:"auto"
+    },
+    icon: {
+      color: 'white'
+    },
+    buttonText: {
+      fontSize: 16,
+      color: '#fff',
+      fontWeight: 'bold',
+    },
+  });
+
   return (
     <KeyboardAvoidingView
       style={{
@@ -87,7 +112,7 @@ export default function LoginScreen() {
             marginBottom: 32,
           }}
         >
-          Welcome! please enter your details
+          Welcome! Please enter your details.
         </Text>
         {!!errors.email && (
           <Chip
@@ -103,11 +128,11 @@ export default function LoginScreen() {
             <HelperText type="error">{errors.email}</HelperText>
           </Chip>
         )}
-        <Text style={{ marginTop: 16 }}>Email</Text>
+        <Text style={{ marginTop: 16, marginBottom: 8 }}>Email ID</Text>
 
         <TextInput
           left={<TextInput.Icon icon="email" />}
-          placeholder="Email"
+          placeholder="Your Input"
           mode="outlined"
           value={values.email}
           error={!!errors.email}
@@ -125,7 +150,7 @@ export default function LoginScreen() {
           autoCapitalize="none"
         />
 
-        <View
+        {/* <View
           style={{
             marginTop: 16,
             display: 'flex',
@@ -147,20 +172,28 @@ export default function LoginScreen() {
             color="#DC520C"
           />
           <Text style={{}}>Remember Me</Text>
-        </View>
-        <Button
+        </View> */}
+
+        {/* <Button
           buttonColor="#DC520C"
           style={{
-            marginTop: 16,
-            borderRadius: 0,
+            backgroundColor: '#FC6011',
+            paddingVertical: 15,
+            borderRadius: 12,
+            marginTop: 30,
+            alignItems: 'center',
           }}
           icon="login-variant"
-          mode="contained"
+          // mode="contained"
           onPress={handleLogin}
         >
           Login
-        </Button>
-        <View
+        </Button> */}
+        <TouchableOpacity style={styles.button} onPress={handleLogin}>
+          <Icon size={18} color='white' source={"login-variant"}></Icon>
+          <Text style={styles.buttonText}> Login</Text>
+        </TouchableOpacity>
+        {/* <View
           style={{
             flexDirection: 'row',
             justifyContent: 'center',
@@ -175,11 +208,11 @@ export default function LoginScreen() {
           >
             <Text>Dont Have an account ?</Text>
 
-            <Button mode="text" textColor="#DC520C" onPress={() => {}}>
+            <Button mode="text" textColor="#DC520C" onPress={() => { }}>
               Sign Up
             </Button>
           </View>
-        </View>
+        </View> */}
       </ScrollView>
     </KeyboardAvoidingView>
   );
