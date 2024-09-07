@@ -1,4 +1,4 @@
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { useState } from 'react';
 import {
   KeyboardAvoidingView,
@@ -26,13 +26,14 @@ const initialErrors = { otp: '' };
 export default function OtpScreen() {
   const [values, setValues] = useState(initialValues);
   const [errors, setErrors] = useState(initialErrors);
-  const { loginUser } = useAuthHook();
-
+  const { loginUser, sendLoginOtp } = useAuthHook();
+  const route = useRoute();
+  const params = route.params;
   const navigation = useNavigation();
 
   const validate = () => {
     let valid = true;
-    if (!values.otp) {
+    if (!values.otp || values.otp?.length < 4) {
       valid = false;
       setErrors((err) => {
         return { ...err, otp: 'otp is required' };
@@ -43,7 +44,7 @@ export default function OtpScreen() {
   };
   const handleLogin = () => {
     if (validate()) {
-      //   loginUser(values);
+      loginUser({ ...values, ...params });
       //   navigation.navigate();
     }
   };
@@ -145,7 +146,13 @@ export default function OtpScreen() {
         >
           <Text>Didn't receive email?</Text>
 
-          <Button mode="text" textColor="#DC520C">
+          <Button
+            mode="text"
+            textColor="#DC520C"
+            onPress={() => {
+              sendLoginOtp({ ...params });
+            }}
+          >
             Click To Resend
           </Button>
         </View>

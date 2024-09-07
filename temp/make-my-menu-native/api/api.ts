@@ -2,7 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { Alert } from 'react-native';
 
-const BASE_URL = 'http://192.168.1.4:8000/api';
+const BASE_URL = 'https://98bd-112-196-112-74.ngrok-free.app/api';
 
 export const BaseAxiosInstance = axios.create({
   baseURL: BASE_URL,
@@ -31,18 +31,26 @@ AuthAxiosInstance.interceptors.request.use(
   }
 );
 
-export function Register(data: object) {
+export function Login(data: object) {
   return BaseAxiosInstance({
     method: 'post',
-    url: '/auth/register',
+    url: '/user/login',
     data: data,
   });
 }
 
-export function Login(data: object) {
+export function SendOtp(data: object) {
   return BaseAxiosInstance({
     method: 'post',
-    url: '/auth/login',
+    url: '/user/send-login-otp',
+    data: data,
+  });
+}
+
+export function onBoardRestaurant(data: object) {
+  return AuthAxiosInstance({
+    method: 'post',
+    url: '/api/restaurant',
     data: data,
   });
 }
