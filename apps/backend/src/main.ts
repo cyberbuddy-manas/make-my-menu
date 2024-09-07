@@ -6,11 +6,20 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import userRoutes from './routes/userRoutes';
 import restaurantRoutes from './routes/restaurantRoutes';
+import menuRoutes from './routes/menuRoutes';
+import {engine} from 'express-handlebars';
 import mongoose from 'mongoose';
 import {authMiddleware} from './middlewares/authMiddleware';
 
 const app = express();
 app.use(cors());
+
+// Handlebars setup
+app.engine('handlebars', engine());
+app.set('view engine', 'handlebars');
+app.set('views', path.join(__dirname, '/assets/templates/'));
+// Public folder setup
+app.use(express.static(__dirname + '/src/assets/templates'));
 
 app.use(bodyParser.json({limit: '50mb'}));
 
@@ -18,7 +27,7 @@ app.use(express.json());
 app.use('/api/user', userRoutes);
 app.use('/api/restaurant', authMiddleware, restaurantRoutes);
 // app.use('/api/generateMenu', generateMenuRoutes);
-// app.use('/menu', menuRoutes);
+app.use('/menu', menuRoutes);
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
 
 app.get('/ping', (req, res) => {
