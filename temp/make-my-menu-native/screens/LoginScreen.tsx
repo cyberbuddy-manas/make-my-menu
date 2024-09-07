@@ -21,7 +21,7 @@ const initialErrors = { email: '' };
 export default function LoginScreen() {
   const [values, setValues] = useState(initialValues);
   const [errors, setErrors] = useState(initialErrors);
-  const { loginUser } = useAuthHook();
+  const { sendLoginOtp } = useAuthHook();
 
   const navigation = useNavigation();
 
@@ -43,8 +43,8 @@ export default function LoginScreen() {
   };
   const handleLogin = () => {
     if (validate()) {
-      //   loginUser(values);
-      navigation.navigate(OtpRoute);
+      sendLoginOtp(values);
+      navigation.navigate(OtpRoute, values);
     }
   };
   return (
@@ -107,7 +107,7 @@ export default function LoginScreen() {
 
         <TextInput
           left={<TextInput.Icon icon="email" />}
-          placeholder="Username"
+          placeholder="Email"
           mode="outlined"
           value={values.email}
           error={!!errors.email}
@@ -175,7 +175,7 @@ export default function LoginScreen() {
           >
             <Text>Dont Have an account ?</Text>
 
-            <Button mode="text" textColor="#DC520C">
+            <Button mode="text" textColor="#DC520C" onPress={() => {}}>
               Sign Up
             </Button>
           </View>
