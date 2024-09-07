@@ -18,7 +18,8 @@ const restaurantSchema = new Schema({
   domain: { type: String, },
   restaurantName: { type: String},
   address: {type: String},
-  menu: { type: Object, required: true },
+  // TODO: define the menu schema
+  // menu: { type: Object, required: true },
   // template Name is an already created template
   activeTemplate: { type: String },   
 },
