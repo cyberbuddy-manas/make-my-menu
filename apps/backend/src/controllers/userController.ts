@@ -23,3 +23,26 @@ export const login = async (req: Request, res: Response) => {
     }
 
 }
+
+export const sendLoginOtp = async (req: Request, res: Response) => {
+    try {
+        const { email } = req.body;
+        const otp = Math.floor(100000 + Math.random() * 900000).toString();
+        const user = await User.findOne({ email });
+        if (!user){
+            // Create a new user and send otp
+            await User.create({ email, 'loginToken.otp': otp });
+            // TODO: Send OTP to email
+            return res.status(200).json({ message: 'Login OTP sent' });
+        }
+        else{
+            // Update the user with new otp valid for 5 minute
+            user.loginToken = { otp, expires: new Date(Date.now() + 5 * 60 * 1000 ) };
+            await user.save();
+            return res.status(200).json({ message: 'Login OTP sent' });
+        }
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: 'Internal server error' });
+    }
+}
