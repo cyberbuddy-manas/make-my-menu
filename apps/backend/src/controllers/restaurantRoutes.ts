@@ -1,6 +1,7 @@
 import Restaurant from "../models/restaurantModel";
 import { Request, Response } from 'express';
 import { IRestaurant } from '../models/restaurantModel';
+import {scrapeMenu} from '../services/zomatoScrapper';
 
 export const onBoardRestaurant = async (req: Request , res: Response) => {
     try {
@@ -73,3 +74,41 @@ export const updateRestaurant = async (req: Request , res: Response) => {
         });
     }
 }
+
+export const deleteRestaurant = async (req: Request , res: Response) => {
+    try {
+        const { id } = req.params;
+        const restaurant = await Restaurant.findByIdAndDelete(id);
+        if (!restaurant) {
+            return res.status(404).send({message: 'Restaurant not found'});
+        }
+        return res.status(200).send({
+            message: 'Restaurant deleted successfully',
+            success: true,
+        });
+    } catch (error) {
+        return res.status(500).send({
+            message: 'Internal Server Error',
+            success: false,
+            error,
+        });
+    }
+}
+
+export const getMenuFromZomato = async (req: Request , res: Response) => {
+    try {
+        const {link} = req.body;
+        const data = await scrapeMenu(link);
+        return res.status(200).send({
+            data,
+            success: true,
+        });
+    } catch (error) {
+        return res.status(500).send({
+            message: 'Internal Server Error',
+            success: false,
+            error,
+        });
+    }
+}
+         
