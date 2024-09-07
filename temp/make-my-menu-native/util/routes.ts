@@ -1,11 +1,7 @@
-export const RegisterRoute = "Register";
-export const LoginRoute = "Login";
-export const HomeRoute = "Chat-Guide";
-export const SettingsRoute = "Settings";
-export const FriendRequestsRoute = "Friend-Requests";
-export const AddFriendRoute = "Add-Friend";
-export const ChatMessageRoute = "Chat";
+export const LoginRoute = 'Login';
+export const OtpRoute = 'Otp';
+export const HomeRoute = 'Chat-Guide';
 
-export const AppStackRoute = "AppStack";
-export const AuthStackRoute = "AuthStack";
-export const AuthCheckRoute = "AuthCheck";
+export const AppStackRoute = 'AppStack';
+export const AuthStackRoute = 'AuthStack';
+export const AuthCheckRoute = 'AuthCheck';

@@ -1,6 +1,12 @@
 import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
-import { KeyboardAvoidingView, ScrollView, View, Image } from 'react-native';
+import {
+  KeyboardAvoidingView,
+  ScrollView,
+  View,
+  Image,
+  Pressable,
+} from 'react-native';
 import {
   Button,
   Checkbox,
@@ -13,12 +19,11 @@ import {
 } from 'react-native-paper';
 import { useAuthHook } from '../api/hooks';
 import { validateEmail } from '../util/functions';
-import { OtpRoute } from '../util/routes';
+import OtpInput from '../components/OtpInput';
+const initialValues = { otp: '' };
+const initialErrors = { otp: '' };
 
-const initialValues = { email: '', rememeberMe: false };
-const initialErrors = { email: '' };
-
-export default function LoginScreen() {
+export default function OtpScreen() {
   const [values, setValues] = useState(initialValues);
   const [errors, setErrors] = useState(initialErrors);
   const { loginUser } = useAuthHook();
@@ -27,15 +32,10 @@ export default function LoginScreen() {
 
   const validate = () => {
     let valid = true;
-    if (!values.email) {
+    if (!values.otp) {
       valid = false;
       setErrors((err) => {
-        return { ...err, email: 'email is required' };
-      });
-    } else if (!validateEmail(values.email)) {
-      valid = false;
-      setErrors((err) => {
-        return { ...err, email: 'invalid email' };
+        return { ...err, otp: 'otp is required' };
       });
     }
 
@@ -44,7 +44,7 @@ export default function LoginScreen() {
   const handleLogin = () => {
     if (validate()) {
       //   loginUser(values);
-      navigation.navigate(OtpRoute);
+      //   navigation.navigate();
     }
   };
   return (
@@ -68,7 +68,7 @@ export default function LoginScreen() {
             justifyContent: 'center',
           }}
         >
-          <Image source={require('../assets/Logo.png')} />
+          <Image source={require('../assets/Mail.png')} />
         </View>
         <Text
           variant="headlineSmall"
@@ -78,18 +78,25 @@ export default function LoginScreen() {
             marginBottom: 8,
           }}
         >
-          Sign In To Your Account
+          OTP Verification
         </Text>
         <Text
           variant="titleMedium"
           style={{
             textAlign: 'center',
-            marginBottom: 32,
           }}
         >
-          Welcome! please enter your details
+          Enter the 4-digit code sent to
         </Text>
-        {!!errors.email && (
+        <Text
+          variant="titleMedium"
+          style={{
+            textAlign: 'center',
+          }}
+        >
+          email
+        </Text>
+        {!!errors.otp && (
           <Chip
             icon={() => <Icon source="information" size={24} color="red" />}
             textStyle={{
@@ -100,54 +107,22 @@ export default function LoginScreen() {
               backgroundColor: MD3Colors.error90,
             }}
           >
-            <HelperText type="error">{errors.email}</HelperText>
+            <HelperText type="error">{errors.otp}</HelperText>
           </Chip>
         )}
-        <Text style={{ marginTop: 16 }}>Email</Text>
 
-        <TextInput
-          left={<TextInput.Icon icon="email" />}
-          placeholder="Username"
-          mode="outlined"
-          value={values.email}
-          error={!!errors.email}
-          onChangeText={(text) => {
+        <OtpInput
+          length={4}
+          onChange={(otp) => {
+            console.log(otp);
             setValues((val) => {
               return {
                 ...val,
-                email: text,
+                otp: otp.join(''),
               };
             });
           }}
-          onFocus={() => {
-            setErrors(initialErrors);
-          }}
-          autoCapitalize="none"
         />
-
-        <View
-          style={{
-            marginTop: 16,
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
-            width: '100%',
-          }}
-        >
-          <Checkbox
-            status={values.rememeberMe ? 'checked' : 'unchecked'}
-            onPress={() => {
-              setValues((val) => {
-                return {
-                  ...val,
-                  rememeberMe: !val.rememeberMe,
-                };
-              });
-            }}
-            color="#DC520C"
-          />
-          <Text style={{}}>Remember Me</Text>
-        </View>
         <Button
           buttonColor="#DC520C"
           style={{
@@ -158,27 +133,21 @@ export default function LoginScreen() {
           mode="contained"
           onPress={handleLogin}
         >
-          Login
+          Verify Email
         </Button>
         <View
           style={{
             flexDirection: 'row',
+            alignItems: 'center',
             justifyContent: 'center',
+            marginTop: 16,
           }}
         >
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            <Text>Dont Have an account ?</Text>
+          <Text>Didn't receive email?</Text>
 
-            <Button mode="text" textColor="#DC520C">
-              Sign Up
-            </Button>
-          </View>
+          <Button mode="text" textColor="#DC520C">
+            Click To Resend
+          </Button>
         </View>
       </ScrollView>
     </KeyboardAvoidingView>

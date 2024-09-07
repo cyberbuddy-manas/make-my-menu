@@ -7,19 +7,16 @@ import HomeScreen from './screens/HomeScreen';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import WithSafeArea from './components/WithSafeArea';
 import {
-  AddFriendRoute,
   AppStackRoute,
   AuthCheckRoute,
   AuthStackRoute,
-  ChatMessageRoute,
-  FriendRequestsRoute,
   HomeRoute,
   LoginRoute,
-  RegisterRoute,
-  SettingsRoute,
+  OtpRoute,
 } from './util/routes';
 import AuthCheck from './components/AuthCheck';
 import AxiosInterceptor from './components/AxiosInterceptor';
+import OtpScreen from './screens/OtpScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -29,6 +26,11 @@ const AuthStack = () => {
       <Stack.Screen
         name={LoginRoute}
         component={WithSafeArea(LoginScreen)}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name={OtpRoute}
+        component={WithSafeArea(OtpScreen)}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
