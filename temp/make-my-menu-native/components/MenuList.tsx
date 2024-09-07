@@ -12,9 +12,14 @@ interface MenuItem {
 interface MenuListProps {
   menus: MenuItem[] | undefined;
   setMenus: React.Dispatch<React.SetStateAction<MenuItem[]>>;
+  handleUpdate: Function;
 }
 
-const MenuList: React.FC<MenuListProps> = ({ menus = [], setMenus }) => {
+const MenuList: React.FC<MenuListProps> = ({
+  menus = [],
+  setMenus,
+  handleUpdate,
+}) => {
   const [selectedMenu, setSelectedMenu] = useState<MenuItem | null>(null);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [isEditing, setIsEditing] = useState<boolean>(false); // To distinguish between edit and add
@@ -45,6 +50,7 @@ const MenuList: React.FC<MenuListProps> = ({ menus = [], setMenus }) => {
         setMenus((prevMenus) => [...(prevMenus ?? []), selectedMenu]);
       }
       setIsModalVisible(false);
+      handleUpdate();
     }
   };
 

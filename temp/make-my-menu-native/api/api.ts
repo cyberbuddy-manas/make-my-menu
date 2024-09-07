@@ -59,8 +59,8 @@ export function OnBoardRestaurant(data: object) {
 
 export function UpdateRestaurant(data: object, id: string) {
   return AuthAxiosInstance({
-    method: 'post',
-    url: `api/restaurant/${id}`,
+    method: 'put',
+    url: `/restaurant/${id}`,
     data: data,
   });
 }
