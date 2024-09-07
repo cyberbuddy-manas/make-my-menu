@@ -95,6 +95,23 @@ export const deleteRestaurant = async (req: Request , res: Response) => {
     }
 }
 
+export const getMyRestaurants = async (req: Request , res: Response) => {
+    try {
+        const { user } = req.body;
+        const restaurants = await Restaurant.find({user});
+        return res.status(200).send({
+            restaurants,
+            success: true,
+        });
+    } catch (error) {
+        return res.status(500).send({
+            message: 'Internal Server Error',
+            success: false,
+            error,
+        });
+    }
+}
+
 const alreadyScrapedData = [
             {
                 "name": "Cream Of Mushroom Soup",
