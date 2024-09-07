@@ -92,10 +92,11 @@ export const useUserHook = () => {
   const dispatch = useDispatch();
 };
 
-export const useRestaurant = () => {
+export const useRestaurantHook = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
+  function getRestaurants() {}
   function onBoardRestaurant(data: object) {}
-  return { onBoardRestaurant };
+  return { onBoardRestaurant, getRestaurants };
 };

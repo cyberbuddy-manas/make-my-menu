@@ -13,12 +13,14 @@ import {
   HomeRoute,
   IntroRoute,
   LoginRoute,
+  onBoardRestaurantRoute,
   OtpRoute,
 } from './util/routes';
 import AuthCheck from './components/AuthCheck';
 import AxiosInterceptor from './components/AxiosInterceptor';
 import OtpScreen from './screens/OtpScreen';
 import IntroScreen from './screens/IntroScreen';
+import OnBoardRestaurantScreen from './screens/OnBoardRestaurantScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -48,6 +50,10 @@ const AppStack = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen name={HomeRoute} component={HomeScreen} />
+      <Stack.Screen
+        name={onBoardRestaurantRoute}
+        component={OnBoardRestaurantScreen}
+      />
     </Stack.Navigator>
   );
 };

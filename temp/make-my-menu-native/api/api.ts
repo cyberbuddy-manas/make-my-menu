@@ -54,3 +54,10 @@ export function onBoardRestaurant(data: object) {
     data: data,
   });
 }
+
+export function getRestaurants() {
+  return AuthAxiosInstance({
+    method: 'get',
+    url: '/api/restaurants',
+  });
+}
