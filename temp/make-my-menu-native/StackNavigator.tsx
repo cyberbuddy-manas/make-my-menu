@@ -11,18 +11,25 @@ import {
   AuthCheckRoute,
   AuthStackRoute,
   HomeRoute,
+  IntroRoute,
   LoginRoute,
   OtpRoute,
 } from './util/routes';
 import AuthCheck from './components/AuthCheck';
 import AxiosInterceptor from './components/AxiosInterceptor';
 import OtpScreen from './screens/OtpScreen';
+import IntroScreen from './screens/IntroScreen';
 
 const Stack = createNativeStackNavigator();
 
 const AuthStack = () => {
   return (
     <Stack.Navigator>
+      <Stack.Screen
+        name={IntroRoute}
+        component={WithSafeArea(IntroScreen)}
+        options={{ headerShown: false }}
+      />
       <Stack.Screen
         name={LoginRoute}
         component={WithSafeArea(LoginScreen)}
