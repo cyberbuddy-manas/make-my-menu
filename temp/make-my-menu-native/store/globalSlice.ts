@@ -1,8 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { stat } from 'fs';
 
 const initialValue = {
   token: '',
-  currentUser: [],
+  currentUser: {},
+  restaurants: [],
 };
 
 const globalSlice = createSlice({
@@ -18,9 +20,12 @@ const globalSlice = createSlice({
     clearGlobal: (state) => {
       return { ...initialValue };
     },
+    storeRestaurants: (state, action) => {
+      state.restaurants = action.payload;
+    },
   },
 });
 
-export const { storeCurrentUser, clearGlobal, storeToken } =
+export const { storeCurrentUser, clearGlobal, storeToken, storeRestaurants } =
   globalSlice.actions;
 export default globalSlice.reducer;
