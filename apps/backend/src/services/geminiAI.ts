@@ -1,7 +1,7 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
 
-exports.menuToJson = async (image)=> {
+export const menuToJson = async (image)=> {
   // console.log("menuToJson called with image:", image);
     // The image must be a base64 encoded string
   const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });

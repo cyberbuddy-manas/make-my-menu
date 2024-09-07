@@ -1,6 +1,7 @@
 import {Schema, model} from 'mongoose';
 
 export interface IRestaurant {
+    _id: string;
     user: string;
     subDomain: string;
     domain: string;
@@ -10,16 +11,34 @@ export interface IRestaurant {
     activeTemplate: string;
 }
 
+// Example menu object
+// {
+//   "starters": [
+//     {
+//       "name": "Bruschetta",
+//       "price": 5.99,
+//       "description": "Grilled bread with tomato and basil"
+//     },
+//   ],
+//   "mains": [
+//     {
+//       "name": "Spaghetti Carbonara",
+//       "price": 12.99,
+//       "description": "Pasta with pancetta and creamy sauce"
+//     },
+//   ]
+// }
+
 const restaurantSchema = new Schema({
   // TODO: make user required
   user: { type: Schema.Types.ObjectId, ref: 'User' },
-  subDomain: { type: String, required: true },
+  subDomain: { type: String, required: true, unique: true },
   // custom domain is to be added in the future
-  domain: { type: String, },
+  domain: { type: String, unique: true },
   restaurantName: { type: String},
   address: {type: String},
   // TODO: define the menu schema
-  // menu: { type: Object, required: true },
+  menu: { type: Object },
   // template Name is an already created template
   activeTemplate: { type: String },   
 },
@@ -27,6 +46,6 @@ const restaurantSchema = new Schema({
 );
 
 
-const Restaurant = model<IRestaurant>('IRestaurant', restaurantSchema);
+const Restaurant = model<IRestaurant>('Restaurant', restaurantSchema);
 
 export default Restaurant;
