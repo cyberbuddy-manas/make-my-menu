@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import jwt from 'jsonwebtoken';
 import User from '../models/userModel';
 import { sendEmail } from '../services/sesEmail';
 import { loginOtpEmailTemplate } from '../services/emailTemplates/login';
@@ -11,8 +12,14 @@ export const sendLoginOtp = async (req: Request, res: Response) => {
         const user = await User.findOne({ email });
         if (!user){
             // Create a new user and send otp
-            await User.create({ email, 'loginToken.otp': otp });
-            // TODO: Send OTP to email
+            await User.create({ email, 'loginToken.otp': otp, 'loginToken.expires': new Date(Date.now() + 5 * 60 * 1000 ) });
+            await sendEmail({
+                recipients: [email],
+                subject: "Reset Password OTP",
+                template: loginOtpEmailTemplate({ email, otp}),
+                ccRecipients: []
+            });
+            // TODO: Send Welcome email to new user
             return res.status(200).json({ message: 'Login OTP sent' });
         }
         else{
@@ -23,7 +30,7 @@ export const sendLoginOtp = async (req: Request, res: Response) => {
             await sendEmail({
                 recipients: [email],
                 subject: "Reset Password OTP",
-                template: loginOtpEmailTemplate({ email: user.email, otp}),
+                template: loginOtpEmailTemplate({ email, otp}),
                 ccRecipients: []
             });
             return res.status(200).json({ message: 'Login OTP sent' });
@@ -37,7 +44,7 @@ export const sendLoginOtp = async (req: Request, res: Response) => {
 export const login = async (req: Request, res: Response) => {
     try {
         const { email, otp } = req.body;
-        const user = await User.create({ email, 'loginToken.otp': otp });
+        const user = await User.findOne({ email, 'loginToken.otp': otp });
         // TODO: check if login otp is expired
         if (!user){
             return res.status(400).json({ message: 'User not found' });
@@ -48,6 +55,14 @@ export const login = async (req: Request, res: Response) => {
         if (user.loginToken.expires < new Date()){
             return res.status(400).json({ message: 'OTP expired' });
         }
+        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+        user.loginToken = { otp: '', expires: new Date() };
+        // Saving the token in DB for SSO
+        user.authToken.token = token;
+        // Saving the token for 28 days
+        user.authToken.expires = new Date(Date.now() + 28 * 24 * 60 * 60 * 1000);
+        // TODO: Save login history
+                
         return res.status(201).json({ user });
     } catch (error) {
         console.error(error);

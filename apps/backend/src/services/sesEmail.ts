@@ -30,12 +30,13 @@ export const sendEmail = ({recipients, subject, template, ccRecipients}) => {
             Data: subject
           }
         },
-        Source: "no-reply@build-mate.in"
+        Source: "no-reply@makemymenu.online"
       };
       const sendEmail = async () => await ses.sendEmail(params).promise();
       sendEmail();
       resolve("Email sent successfully");
     } catch (error) {
+        console.log("error", error);
       return reject(error);
     }
   });
