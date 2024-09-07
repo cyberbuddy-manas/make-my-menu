@@ -1,14 +1,14 @@
 import {Schema, model} from 'mongoose';
 
-interface IRestaurant {
+export interface IRestaurant {
     user: string;
     subDomain: string;
     domain: string;
     restaurantName: string;
     address: string;
     menu: object;
-    template: string;
-    }
+    activeTemplate: string;
+}
 
 const restaurantSchema = new Schema({
   // TODO: make user required
@@ -18,9 +18,10 @@ const restaurantSchema = new Schema({
   domain: { type: String, },
   restaurantName: { type: String},
   address: {type: String},
-  menu: { type: Object, required: true },
-    // template Name is an already created template
-  templateName: { type: String },   
+  // TODO: define the menu schema
+  // menu: { type: Object, required: true },
+  // template Name is an already created template
+  activeTemplate: { type: String },   
 },
 { timestamps: true}
 );
