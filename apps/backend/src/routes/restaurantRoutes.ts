@@ -1,6 +1,6 @@
 import express from 'express';
 const router = express.Router();
-import {onBoardRestaurant, getRestaurant, getMyRestaurants, updateRestaurant, deleteRestaurant, getMenuFromZomato} from '../controllers/restaurantRoutes';
+import {onBoardRestaurant, getRestaurant, getMyRestaurants, updateRestaurant, deleteRestaurant, getMenuFromZomato} from '../controllers/restaurantController';
 
 
 router.post('/', onBoardRestaurant);
