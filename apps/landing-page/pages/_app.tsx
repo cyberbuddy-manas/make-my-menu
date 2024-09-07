@@ -1,18 +1,28 @@
+import { Shantell_Sans } from '@next/font/google';
+import { Rubik } from '@next/font/google';
+import '../styles/globals.css';
+import NProgress from 'nprogress';
+import Router from 'next/router';
 import { AppProps } from 'next/app';
-import Head from 'next/head';
-import './styles.css';
 
-function CustomApp({ Component, pageProps }: AppProps) {
+Router.events.on('routeChangeStart', () => NProgress.start());
+Router.events.on('routeChangeComplete', () => NProgress.done());
+Router.events.on('routeChangeError', () => NProgress.done());
+NProgress.configure({ showSpinner: false });
+
+const shantellSans = Shantell_Sans({ subsets: ['latin'], preload: false });
+const rubik = Rubik({ subsets: ['latin'], preload: false });
+
+function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
-      <Head>
-        <title>Welcome to landing-page!</title>
-      </Head>
-      <main className="app">
-        <Component {...pageProps} />
-      </main>
+      <style jsx global>{`
+        :root { --font-shantell-sans: ${rubik.style.fontFamily}; }
+        body { font-family: var(--font-shantell-sans); }        
+      `}</style>
+      <Component {...pageProps} />
     </>
   );
 }
 
-export default CustomApp;
+export default MyApp;
