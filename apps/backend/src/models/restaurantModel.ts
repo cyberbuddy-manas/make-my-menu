@@ -4,7 +4,7 @@ export interface IRestaurant {
     _id: string;
     user: string;
     subDomain: string;
-    domain: string;
+    // domain: string;
     restaurantName: string;
     address: string;
     menu: object;
@@ -34,7 +34,7 @@ const restaurantSchema = new Schema({
   user: { type: Schema.Types.ObjectId, ref: 'User' },
   subDomain: { type: String, required: true, unique: true },
   // custom domain is to be added in the future
-  domain: { type: String, unique: true },
+  // domain: { type: String, unique: true },
   restaurantName: { type: String},
   address: {type: String},
   // TODO: define the menu schema

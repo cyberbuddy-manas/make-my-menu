@@ -5,12 +5,12 @@ import {scrapeMenu} from '../services/zomatoScrapper';
 
 export const onBoardRestaurant = async (req: Request , res: Response) => {
     try {
-        const { user, subDomain, domain, restaurantName, address, menu} = req.body as IRestaurant;
+        const { user, subDomain, restaurantName, address, menu} = req.body as IRestaurant;
         // const user = req.user._id;
         const restaurant = new Restaurant({
             user,
             subDomain,
-            domain,
+            // domain,
             restaurantName,
             address,
             menu,
@@ -84,6 +84,23 @@ export const deleteRestaurant = async (req: Request , res: Response) => {
         }
         return res.status(200).send({
             message: 'Restaurant deleted successfully',
+            success: true,
+        });
+    } catch (error) {
+        return res.status(500).send({
+            message: 'Internal Server Error',
+            success: false,
+            error,
+        });
+    }
+}
+
+export const getMyRestaurants = async (req: Request , res: Response) => {
+    try {
+        const { user } = req.body;
+        const restaurants = await Restaurant.find({user});
+        return res.status(200).send({
+            restaurants,
             success: true,
         });
     } catch (error) {
