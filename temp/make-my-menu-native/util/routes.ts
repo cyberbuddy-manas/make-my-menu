@@ -2,6 +2,7 @@ export const LoginRoute = 'Login';
 export const OtpRoute = 'Otp';
 export const HomeRoute = 'Home';
 export const IntroRoute = 'Intro';
+export const MenuRoute = 'Menu';
 export const onBoardRestaurantRoute = 'On Board Restaurant';
 
 export const AppStackRoute = 'AppStack';

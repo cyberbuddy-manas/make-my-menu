@@ -24,6 +24,7 @@ const AuthCheck: React.FC<AuthCheckProps> = ({ navigation }) => {
         if (!token) {
           // No token, navigate to AuthStackRoute
           navigation.replace(AuthStackRoute);
+          // navigation.replace(AppStackRoute);
         } else {
           // Have both token and user
           dispatch(storeToken(token));
