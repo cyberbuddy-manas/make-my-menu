@@ -8,14 +8,14 @@ import { loginOtpEmailTemplate } from '../services/emailTemplates/login';
 export const sendLoginOtp = async (req: Request, res: Response) => {
     try {
         const { email } = req.body;
-        const otp = Math.floor(100000 + Math.random() * 900000).toString();
+        const otp = Math.floor(1000 + Math.random() * 9000).toString();
         const user = await User.findOne({ email });
         if (!user){
             // Create a new user and send otp
             await User.create({ email, 'loginToken.otp': otp, 'loginToken.expires': new Date(Date.now() + 5 * 60 * 1000 ) });
             await sendEmail({
                 recipients: [email],
-                subject: "Reset Password OTP",
+                subject: "Login OTP - Make My Menu",
                 template: loginOtpEmailTemplate({ email, otp}),
                 ccRecipients: []
             });
