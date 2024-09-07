@@ -1,8 +1,10 @@
 import express from 'express';
 const router = express.Router();
-import {onBoardRestaurant} from '../controllers/restaurantRoutes';
-  
-router.post('/onboard', onBoardRestaurant);
+import {onBoardRestaurant, getRestaurant, updateRestaurant} from '../controllers/restaurantRoutes';
 
+
+router.post('/', onBoardRestaurant);
+router.get('/:id', getRestaurant);
+router.put('/:id', updateRestaurant);
   
 export default router;

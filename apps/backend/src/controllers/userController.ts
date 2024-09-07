@@ -1,5 +1,7 @@
 import { Request, Response } from 'express';
 import User from '../models/userModel';
+import { sendEmail } from '../services/sesEmail';
+import { loginOtpEmailTemplate } from '../services/emailTemplates/login';
 
 
 export const sendLoginOtp = async (req: Request, res: Response) => {
@@ -17,6 +19,13 @@ export const sendLoginOtp = async (req: Request, res: Response) => {
             // Update the user with new otp valid for 5 minute
             user.loginToken = { otp, expires: new Date(Date.now() + 5 * 60 * 1000 ) };
             await user.save();
+                // Send the OTP to the user via email
+            await sendEmail({
+                recipients: [email],
+                subject: "Reset Password OTP",
+                template: loginOtpEmailTemplate({ email: user.email, otp}),
+                ccRecipients: []
+            });
             return res.status(200).json({ message: 'Login OTP sent' });
         }
     } catch (error) {
