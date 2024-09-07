@@ -2,7 +2,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { Alert } from 'react-native';
 
-const BASE_URL = 'https://98bd-112-196-112-74.ngrok-free.app/api';
+// const BASE_URL = 'https://5d90-112-196-112-74.ngrok-free.app/api';
+// const BASE_URL = 'http://localhost:8000/api';
+const BASE_URL = 'https://api.makemymenu.online/api';
 
 export const BaseAxiosInstance = axios.create({
   baseURL: BASE_URL,
@@ -47,17 +49,25 @@ export function SendOtp(data: object) {
   });
 }
 
-export function onBoardRestaurant(data: object) {
+export function OnBoardRestaurant(data: object) {
   return AuthAxiosInstance({
     method: 'post',
-    url: '/api/restaurant',
+    url: '/restaurant',
     data: data,
   });
 }
 
-export function getRestaurants() {
+export function UpdateRestaurant(data: object, id: string) {
+  return AuthAxiosInstance({
+    method: 'put',
+    url: `/restaurant/${id}`,
+    data: data,
+  });
+}
+
+export function GetRestaurants() {
   return AuthAxiosInstance({
     method: 'get',
-    url: '/api/restaurants',
+    url: '/restaurant',
   });
 }

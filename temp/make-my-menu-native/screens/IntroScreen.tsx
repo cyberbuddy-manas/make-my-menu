@@ -32,7 +32,7 @@ export default function IntroScreen() {
             setCurrentScreen(currentScreen + 1);
         } else {
             // Handle the final screen logic here, like navigation to the main app
-            alert('Onboarding Completed');
+            // alert('Onboarding Completed');
             navigation.navigate(LoginRoute);
         }
     };
