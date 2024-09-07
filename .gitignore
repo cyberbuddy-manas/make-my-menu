@@ -68,4 +68,6 @@ cache/
 .env.test
 .env.production
 
-
+# Next.js
+.next
+out
