@@ -63,7 +63,7 @@ export const login = async (req: Request, res: Response) => {
         user.authToken.expires = new Date(Date.now() + 28 * 24 * 60 * 60 * 1000);
         // TODO: Save login history
                 
-        return res.status(201).json({ user });
+        return res.status(200).json({ user });
     } catch (error) {
         console.error(error);
         // TODO: add a logger

@@ -41,6 +41,7 @@ const restaurantSchema = new Schema({
   menu: { type: Object },
   // template Name is an already created template
   activeTemplate: { type: String },   
+  isActive: { type: Boolean, default: true },
 },
 { timestamps: true}
 );
