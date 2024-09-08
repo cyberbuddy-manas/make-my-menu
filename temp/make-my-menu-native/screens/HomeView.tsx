@@ -1,16 +1,41 @@
-import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Image, FlatList } from 'react-native';
-import { Button } from 'react-native-paper';
+import React, { useEffect } from 'react';
+import { StyleSheet, View, TouchableOpacity, Image, FlatList } from 'react-native';
+import { Button, Text } from 'react-native-paper';
+import { useAuthHook, useRestaurantHook } from '../api/hooks';
+import { useNavigation } from '@react-navigation/native';
+import { AddMenuItemRoute, AddRestaurantRoute } from '../util/routes';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store/store';
 
 const HomeScreen = () => {
-    const restaurants = [
-        { id: '1', name: 'Restro Name' },
-        { id: '2', name: 'Restro Name' },
-        { id: '3', name: 'Restro Name' },
-        { id: '4', name: 'Restro Name' },
-        { id: '5', name: 'Restro Name' },
-        { id: '6', name: 'Restro Name' },
-    ];
+    // const restaurants = [
+    //     { id: '1', name: 'Restro Name' },
+    //     { id: '2', name: 'Restro Name' },
+    //     { id: '3', name: 'Restro Name' },
+    //     { id: '4', name: 'Restro Name' },
+    //     { id: '5', name: 'Restro Name' },
+    //     { id: '6', name: 'Restro Name' },
+    // ];
+    const navigation = useNavigation();
+
+    const {
+        restaurants,
+    }: {
+        restaurants: {
+            _id: string;
+            restaurantName: string;
+            menu: object;
+        }[];
+    } = useSelector((state: RootState) => state.global);
+    const { getRestaurants } = useRestaurantHook();
+
+    useEffect(() => {
+        if (restaurants?.length == 0) {
+            getRestaurants();
+        }
+    }, []);
+
+    const { logoutUser } = useAuthHook();
 
     const renderRestaurant = ({ item }) => (
         <TouchableOpacity style={styles.restaurantButton}>
@@ -21,7 +46,7 @@ const HomeScreen = () => {
     return (
         <View style={styles.container}>
             {/* Logout Button */}
-            <TouchableOpacity style={styles.logoutButton}>
+            <TouchableOpacity onPress={() => { logoutUser() }} style={styles.logoutButton}>
                 <Text style={styles.logoutText}>Logout</Text>
             </TouchableOpacity>
 
@@ -35,21 +60,25 @@ const HomeScreen = () => {
             </View>
 
             {/* Onboard Your Restaurant Button */}
-            <TouchableOpacity style={styles.onboardButton}>
+            <TouchableOpacity style={styles.onboardButton} onPress={() => { navigation.navigate(AddRestaurantRoute) }}>
                 <Image source={require('../assets/bg-home.png')} style={styles.onboardImage} />
                 <Text style={styles.onboardText}>Onboard your Restaurant</Text>
             </TouchableOpacity>
 
-            {/* Available Restaurants */}
-            <Text style={styles.availableText}>Available Restaurants</Text>
-            <FlatList
-                data={restaurants}
-                renderItem={renderRestaurant}
-                keyExtractor={(item) => item.id}
-                numColumns={2}
-                style={styles.restaurantList}
-            />
-        </View>
+            <View>
+                {/* Available Restaurants */}
+                <Text style={styles.availableText}>Available Restaurants</Text>
+
+                {/* Mapping over restaurants */}
+                {restaurants.map((rest, index) => (
+                    < TouchableOpacity key={rest._id} style={styles.restaurantButton} onPress={() => navigation.navigate(AddMenuItemRoute, rest)}>
+                        {/* Ensure this is a valid string */}
+                        <Text style={styles.restaurantText}>hj{rest.restaurantName || 'Unnamed Restaurant'}</Text>
+                    </ TouchableOpacity>
+                ))}
+            </View>
+
+        </View >
     );
 };
 
@@ -120,7 +149,7 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     },
     restaurantButton: {
-        flex: 1,
+        flexGrow: 1,
         borderWidth: 1,
         borderColor: '#ddd',
         borderRadius: 8,
