@@ -3,6 +3,7 @@ import { Alert } from 'react-native';
 import {
   GetRestaurants,
   Login,
+  MenuToJson,
   OnBoardRestaurant,
   ScrapZomato,
   SendOtp,
@@ -153,5 +154,20 @@ export const useRestaurantHook = () => {
       Alert.alert('Error', error?.message);
     }
   }
-  return { onBoardRestaurant, getRestaurants, updateRestaurant, scrapZomato };
+  async function menuToJSON(data: object, params: object) {
+    try {
+      const response: ApiResponse<RestaurantResponse> = await MenuToJson(data);
+      console.log('restaurants', response?.data);
+      // getRestaurants();
+    } catch (error: any) {
+      Alert.alert('Error', error?.message);
+    }
+  }
+  return {
+    onBoardRestaurant,
+    getRestaurants,
+    updateRestaurant,
+    scrapZomato,
+    menuToJSON,
+  };
 };

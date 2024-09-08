@@ -2,6 +2,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Button, Text } from 'react-native-paper';
 import {
   AddMenuItemRoute,
+  AddRestaurantRoute,
   MenuRoute,
   onBoardRestaurantRoute,
 } from '../util/routes';
@@ -59,7 +60,7 @@ export default function HomeScreen() {
           mode="outlined"
           icon="plus"
           onPress={() => {
-            navigation.navigate(onBoardRestaurantRoute);
+            navigation.navigate(AddRestaurantRoute);
           }}
         >
           on board restaurant
