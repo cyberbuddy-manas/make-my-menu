@@ -2,6 +2,7 @@ import Restaurant from "../models/restaurantModel";
 import { Request, Response } from 'express';
 import { IRestaurant } from '../models/restaurantModel';
 import {scrapeMenu} from '../services/zomatoScrapper';
+import { menuToJsonAI } from "../services/geminiAI";
 
 export const onBoardRestaurant = async (req: Request , res: Response) => {
     try {
@@ -926,4 +927,20 @@ export const getMenuFromZomato = async (req: Request , res: Response) => {
         });
     }
 }
-         
+
+export const getMenuFromImage = async (req: Request , res: Response) => {
+    try {
+        const {baseImage} = req.body;
+        const data = await menuToJsonAI(baseImage);
+        return res.status(200).send({
+            data,
+            success: true,
+        });
+    } catch (error) {
+        return res.status(500).send({
+            message: 'Internal Server Error',
+            success: false,
+            error,
+        });
+    }
+}

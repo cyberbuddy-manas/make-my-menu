@@ -71,6 +71,7 @@
   border-radius: 3px;
   z-index: -1;
   transition: 0.24s;
+  display: none !important;
 }
 
 * {
