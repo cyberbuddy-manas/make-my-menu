@@ -4,6 +4,7 @@ import {
   GetRestaurants,
   Login,
   OnBoardRestaurant,
+  ScrapZomato,
   SendOtp,
   UpdateRestaurant,
 } from './api';
@@ -143,5 +144,14 @@ export const useRestaurantHook = () => {
       Alert.alert('Error', error?.message);
     }
   }
-  return { onBoardRestaurant, getRestaurants, updateRestaurant };
+
+  async function scrapZomato(data: object) {
+    try {
+      const response: ApiResponse = await ScrapZomato(data);
+      console.log('restaurants', response?.data);
+    } catch (error: any) {
+      Alert.alert('Error', error?.message);
+    }
+  }
+  return { onBoardRestaurant, getRestaurants, updateRestaurant, scrapZomato };
 };

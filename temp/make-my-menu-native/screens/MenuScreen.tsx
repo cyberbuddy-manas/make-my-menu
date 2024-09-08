@@ -1,7 +1,7 @@
 import { useRoute, RouteProp } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { ScrollView, View } from 'react-native';
-import { Text } from 'react-native-paper';
+import { FAB, Portal, Text } from 'react-native-paper';
 import MenuList from '../components/MenuList';
 import { useRestaurantHook } from '../api/hooks';
 
@@ -43,7 +43,9 @@ export default function MenuScreen() {
       return menuReturn;
     });
   };
-
+  const handleZomatoMenu = () => {
+    // set menu'
+  };
   return (
     <ScrollView
       contentContainerStyle={{
@@ -59,12 +61,20 @@ export default function MenuScreen() {
         }}
       >
         <Text>{params?.restaurantName || ''}</Text>
-        <MenuList
-          menus={menus}
-          setMenus={setMenus}
-          handleUpdate={handleUpdate}
-        />
       </View>
+      <MenuList menus={menus} setMenus={setMenus} handleUpdate={handleUpdate} />
+      <Portal>
+        <FAB
+          label="Zomato Menu"
+          style={{
+            position: 'absolute',
+            right: 16,
+            bottom: 16,
+          }}
+          icon="plus"
+          onPress={() => {}}
+        />
+      </Portal>
     </ScrollView>
   );
 }

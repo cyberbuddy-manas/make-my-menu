@@ -2,9 +2,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { Alert } from 'react-native';
 
-const BASE_URL = 'https://5265-112-196-112-74.ngrok-free.app/api';
+// const BASE_URL = 'https://5265-112-196-112-74.ngrok-free.app/api';
 // const BASE_URL = 'http://localhost:8000/api';
-// const BASE_URL = 'https://api.makemymenu.online/api';
+const BASE_URL = 'https://api.makemymenu.online/api';
 
 export const BaseAxiosInstance = axios.create({
   baseURL: BASE_URL,
