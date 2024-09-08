@@ -71,3 +71,11 @@ export function GetRestaurants() {
     url: '/restaurant',
   });
 }
+
+export function MenuToJson(data: object) {
+  return AuthAxiosInstance({
+    method: 'post',
+    url: '/restaurant/menu-to-json',
+    data: data,
+  });
+}

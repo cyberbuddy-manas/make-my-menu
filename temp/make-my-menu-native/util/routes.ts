@@ -10,3 +10,4 @@ export const AuthStackRoute = 'AuthStack';
 export const AuthCheckRoute = 'AuthCheck';
 export const AddRestaurantRoute = 'AddRestaurant';
 export const AddMenuItemRoute = 'AddMenuItem';
+export const HomeViewRoute = 'HomeView';

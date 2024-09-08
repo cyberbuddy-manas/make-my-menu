@@ -11,9 +11,14 @@ import {
   TextInput,
   ScrollView,
   Pressable,
+  Alert,
 } from 'react-native';
 import { useRestaurantHook } from '../api/hooks';
-import { TouchableRipple } from 'react-native-paper';
+import { IconButton, TouchableRipple } from 'react-native-paper';
+import * as ImagePicker from 'expo-image-picker';
+import { RootState } from '../store/store';
+import { useSelector } from 'react-redux';
+import QRCodeModal from '../components/QrCodeModal';
 
 interface MenuItem {
   id: number;
@@ -28,17 +33,34 @@ type MenuScreenRouteProp = RouteProp<
     params: {
       menu: MenuItem[];
       restaurantName?: string;
+      subDomain: string;
     };
   },
   'params'
 >;
+type ImagePickerResult = {
+  canceled: boolean;
+  assets: {
+    uri: string;
+    fileName?: string;
+    fileSize?: number;
+    type?: string;
+    width?: number;
+    height?: number;
+    base64?: string;
+  }[];
+};
 
 export default function MenuScreen() {
+  const { imageApiLoading } = useSelector((state: RootState) => state.global);
+
+  const [modalVisible, setModalVisible] = useState(false);
+
   const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
   const route = useRoute<MenuScreenRouteProp>();
   const { params } = route;
-
-  const { updateRestaurant } = useRestaurantHook();
+  const link = `https://${params?.subDomain}.makemymenu.online/menu`; // Your link here
+  const { updateRestaurant, menuToJSON } = useRestaurantHook();
 
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [isEditing, setIsEditing] = useState<boolean>(false);
@@ -81,6 +103,53 @@ export default function MenuScreen() {
     setSelectedItemId(item.id);
     setIsModalVisible(true);
   };
+  const handlePickImage = async (): Promise<void> => {
+    try {
+      let result: ImagePickerResult =
+        (await ImagePicker.launchImageLibraryAsync({
+          quality: 1,
+          base64: true,
+        })) as ImagePickerResult;
+
+      if (!result.canceled) {
+        if (
+          result.assets[0].fileSize &&
+          result.assets[0].fileSize > 10 * 1024 * 1024
+        ) {
+          Alert.alert('Error', "Image can't be more than 10mb");
+          return;
+        }
+        menuToJSON({ baseImage: result?.assets[0]?.base64 }, params);
+        // setImage(result.assets[0].base64); // Assuming `setImage` is a function that accepts the asset object.
+      }
+    } catch (error) {
+      Alert.alert('Error', 'Unable to Pick Image');
+    }
+  };
+
+  const handleCameraImage = async (): Promise<void> => {
+    try {
+      let result: ImagePickerResult = (await ImagePicker.launchCameraAsync({
+        quality: 1,
+        base64: true,
+      })) as ImagePickerResult;
+
+      //   console.log(result);
+
+      if (!result.canceled) {
+        if (
+          result.assets[0].fileSize &&
+          result.assets[0].fileSize > 10 * 1024 * 1024
+        ) {
+          Alert.alert('Error', "Image can't be more than 10mb");
+          return;
+        }
+        menuToJSON({ baseImage: result?.assets[0]?.base64 }, params);
+      }
+    } catch (error) {
+      Alert.alert('Error', 'Unable to Open Camera');
+    }
+  };
 
   const saveNewItem = () => {
     if (isEditing && selectedItemId !== null) {
@@ -113,7 +182,7 @@ export default function MenuScreen() {
       <Text style={styles.itemName}>{item.name}</Text>
       <Text style={styles.itemDescription}>{item.description}</Text>
       <Text style={styles.itemCategory}>Category: {item.category}</Text>
-      <Text style={styles.itemPrice}>₹ {item.price}</Text>
+      <Text style={styles.itemPrice}>$ {item.price}</Text>
       <TouchableOpacity
         style={styles.editButton}
         onPress={() => openEditItemModal(item)}
@@ -125,6 +194,11 @@ export default function MenuScreen() {
 
   return (
     <View style={styles.container}>
+      <QRCodeModal
+        visible={modalVisible}
+        onDismiss={() => setModalVisible(false)}
+        link={link}
+      />
       <TouchableOpacity
         style={styles.backButton}
         onPress={() => {
@@ -135,7 +209,11 @@ export default function MenuScreen() {
       </TouchableOpacity>
 
       <View style={styles.logoContainer}>
-        <TouchableRipple onPress={() => {}}>
+        <TouchableRipple
+          onPress={() => {
+            setModalVisible(true);
+          }}
+        >
           <Image source={require('../assets/Logo.png')} style={styles.logo} />
         </TouchableRipple>
       </View>
@@ -161,6 +239,14 @@ export default function MenuScreen() {
           </TouchableOpacity>
         }
       />
+      <View
+        style={{
+          flexDirection: 'row',
+        }}
+      >
+        <IconButton icon={'attachment'} onPress={handlePickImage} />
+        <IconButton icon={'camera'} onPress={handleCameraImage} />
+      </View>
 
       <TouchableOpacity style={styles.publishButton} onPress={handlePublish}>
         <Text style={styles.publishButtonText}>Publish →</Text>
@@ -209,7 +295,7 @@ export default function MenuScreen() {
           </TouchableOpacity>
           {dropdownVisible && (
             <View style={styles.dropdown}>
-              {['Pizza', 'Pasta', 'Burgers', 'Drinks', 'other'].map(
+              {['Pizza', 'Pasta', 'Burgers', 'Drinks', 'Other'].map(
                 (category) => (
                   <TouchableOpacity
                     key={category}
@@ -377,7 +463,7 @@ const styles = StyleSheet.create({
     borderBottomColor: '#ddd',
   },
   saveButton: {
-    backgroundColor: '#FF6F61',
+    backgroundColor: '#FC6011',
     padding: 15,
     borderRadius: 8,
     marginTop: 20,

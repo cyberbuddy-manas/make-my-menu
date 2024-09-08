@@ -2,6 +2,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Button, Text } from 'react-native-paper';
 import {
   AddMenuItemRoute,
+  AddRestaurantRoute,
   MenuRoute,
   onBoardRestaurantRoute,
 } from '../util/routes';
@@ -9,7 +10,7 @@ import { useEffect, useLayoutEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store/store';
 import { useAuthHook, useRestaurantHook } from '../api/hooks';
-import { ScrollView, View } from 'react-native';
+import { RefreshControl, ScrollView, View } from 'react-native';
 
 export default function HomeScreen() {
   const {
@@ -47,6 +48,14 @@ export default function HomeScreen() {
         flexGrow: 1,
         padding: 24,
       }}
+      refreshControl={
+        <RefreshControl
+          refreshing={false}
+          onRefresh={() => {
+            getRestaurants();
+          }}
+        />
+      }
     >
       <View
         style={{
@@ -59,7 +68,7 @@ export default function HomeScreen() {
           mode="outlined"
           icon="plus"
           onPress={() => {
-            navigation.navigate(onBoardRestaurantRoute);
+            navigation.navigate(AddRestaurantRoute);
           }}
         >
           on board restaurant

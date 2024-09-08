@@ -13,6 +13,7 @@ import {
   AuthCheckRoute,
   AuthStackRoute,
   HomeRoute,
+  HomeViewRoute,
   IntroRoute,
   LoginRoute,
   MenuRoute,
@@ -27,6 +28,7 @@ import OnBoardRestaurantScreen from './screens/OnBoardRestaurantScreen';
 import MenuScreen from './screens/MenuScreen';
 import AddRestaurant from './screens/AddRestaurant';
 import AddMenuItem from './screens/AddMenuItem';
+import HomeView from './screens/HomeView'
 
 const Stack = createNativeStackNavigator();
 
@@ -55,6 +57,7 @@ const AuthStack = () => {
 const AppStack = () => {
   return (
     <Stack.Navigator>
+      <Stack.Screen name={HomeViewRoute} component={HomeView} options={{ headerShown: false }} />
       <Stack.Screen name={HomeRoute} component={HomeScreen} />
       <Stack.Screen name={AddRestaurantRoute} component={AddRestaurant} options={{ headerShown: false }} />
       <Stack.Screen name={AddMenuItemRoute} component={AddMenuItem} options={{ headerShown: false }} />

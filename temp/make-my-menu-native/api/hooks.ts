@@ -3,6 +3,7 @@ import { Alert } from 'react-native';
 import {
   GetRestaurants,
   Login,
+  MenuToJson,
   OnBoardRestaurant,
   ScrapZomato,
   SendOtp,
@@ -14,6 +15,7 @@ import { AuthCheckRoute } from '../util/routes';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   clearGlobal,
+  storeApiLoading,
   storeCurrentUser,
   storeRestaurants,
   storeToken,
@@ -126,6 +128,7 @@ export const useRestaurantHook = () => {
       const response: ApiResponse<RestaurantResponse> = await OnBoardRestaurant(
         data
       );
+      // navigation.goBack();
       console.log('login', response?.data);
       getRestaurants();
     } catch (error: any) {
@@ -153,5 +156,46 @@ export const useRestaurantHook = () => {
       Alert.alert('Error', error?.message);
     }
   }
-  return { onBoardRestaurant, getRestaurants, updateRestaurant, scrapZomato };
+  async function menuToJSON(data: object, params: object) {
+    try {
+      dispatch(storeApiLoading(true));
+      console.log('hiasdii');
+      const response: ApiResponse = await MenuToJson(data);
+      const menuNew = [
+        ...(params?.menu ?? []),
+        ...JSON.parse(
+          response?.data?.data?.response?.candidates[0]?.content?.parts[0]?.text?.slice(
+            7,
+            -3
+          )
+        )?.map((item) => {
+          console.log(item);
+          return {
+            ...item,
+            description: '',
+            id: new Date(),
+            ...(item?.item ? { name: item?.item } : {}),
+          };
+        }),
+      ];
+      console.log('restaurants', menuNew);
+      await updateRestaurant({
+        ...params,
+        menu: menuNew,
+      });
+      Alert.alert('Success', 'Done Convertion');
+      // getRestaurants();
+      dispatch(storeApiLoading(false));
+    } catch (error: any) {
+      dispatch(storeApiLoading(false));
+      Alert.alert('Error', error?.message);
+    }
+  }
+  return {
+    onBoardRestaurant,
+    getRestaurants,
+    updateRestaurant,
+    scrapZomato,
+    menuToJSON,
+  };
 };

@@ -42,7 +42,7 @@ export default function IntroScreen() {
 
             {/* Skip Button */}
             <View style={styles.skipContainer}>
-                <Text style={styles.skipText}>Skip</Text>
+                <Text onPress={() => { navigation.navigate(LoginRoute) }} style={styles.skipText}>Skip</Text>
             </View>
 
             {/* Main Content */}
