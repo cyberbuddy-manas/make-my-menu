@@ -58,7 +58,7 @@ const Contact: React.FC = () => {
                             id="message"
                             rows={6}
                             className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg shadow-sm border border-gray-300  dark:bg-gray-800 dark:text-[white]"
-                            placeholder="Leave a comment..."
+                            placeholder="How can we help you today ?"
                             value={message}
                             onChange={(e) => setMessage(e.target.value)}
                         />

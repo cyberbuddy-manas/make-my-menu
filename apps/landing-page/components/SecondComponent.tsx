@@ -9,33 +9,33 @@ interface Item {
 const items: Item[] = [
     {
         icon: <FaBeer size={40} />,
-        heading: "For Functional App Sites",
-        paragraph: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In convallis tortor"
+        heading: "Easy To Use",
+        paragraph: "Intuitive design allows restuarant owners to create and manage their menus"
     },
     {
         icon: <FaCoffee size={40} />,
-        heading: "High-quality Design",
-        paragraph: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In convallis tortor"
+        heading: "Customizable Templates",
+        paragraph: "Choose a variety of templates to suit your restaurant's brand and style"
     },
     {
         icon: <FaApple size={40} />,
-        heading: "Essential Integrations",
-        paragraph: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In convallis tortor"
+        heading: "Interactive Menu Items",
+        paragraph: "Add descriptions, ingredients, and images to your menu items"
     },
     {
         icon: <FaCar size={40} />,
-        heading: "Essential Components",
-        paragraph: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In convallis tortor"
+        heading: "Menu Analytics",
+        paragraph: "Gain valuable insights about your menu items and customer preferences"
     },
     {
         icon: <FaBicycle size={40} />,
-        heading: "Fully Customizable",
-        paragraph: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In convallis tortor"
+        heading: "Integration",
+        paragraph: "Connect menus to popular food delivery platforms across India"
     },
     {
         icon: <FaBolt size={40} />,
-        heading: "Regular Free Updates",
-        paragraph: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In convallis tortor"
+        heading: "Free To Use",
+        paragraph: "Make my menu is free to use for all restaurant owners"
     }
 ];
 
@@ -47,7 +47,7 @@ const SecondComponent: React.FC = () => {
             <div className="flex justify-center items-center gap-10 flex-wrap px-4">
                 {items.map((item, index) => (
                     <div className="px-4 py-8 shadow-md rounded-md bg-[white] hover:scale-110 transition-transform cursor-pointer dark:bg-gray-900 text-center max-w-[360px]" key={index}>
-                        <div className="flex justify-center mb-4 text-blue-500">{item.icon}</div>
+                        {/* <div className="flex justify-center mb-4 text-blue-500">{item.icon}</div> */}
                         <h3 className="text-lg font-semibold mb-2 text-[#1a1a1a] dark:text-white">{item.heading}</h3>
                         <p className="text-center text-[#414040] dark:text-[whitesmoke]">{item.paragraph}</p>
                     </div>

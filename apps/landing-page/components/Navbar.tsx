@@ -4,8 +4,8 @@ import { IoMoonOutline } from "react-icons/io5";
 import { LuSun } from "react-icons/lu";
 
 const Navbar: React.FC = () => {
-    const [isOpen, setIsOpen] = useState<boolean>(false); // State to handle menu visibility
-    const [isDarkMode, setIsDarkMode] = useState<boolean>(false); // State to handle dark mode
+    const [isOpen, setIsOpen] = useState<boolean>(false);
+    const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
 
     useEffect(() => {
         // Check if dark mode is already enabled in localStorage

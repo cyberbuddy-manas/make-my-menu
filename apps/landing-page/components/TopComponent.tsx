@@ -1,33 +1,23 @@
 import React from 'react';
 import { TfiAndroid } from "react-icons/tfi";
 import { AiFillYoutube } from "react-icons/ai";
-import Typical from 'react-typical';
 
 const TopComponent: React.FC = () => {
     return (
         <div className="md:flex md:gap-10 items-center justify-center mt-5 md:px-6 px-4">
             <div>
-                {/* <div className="text-4xl font-bold my-3 text-[#1a1a1a] dark:text-white">
-                    Welcome to <span className="text-red-500 dark:text-red-400 text-[40px] ">MENU MAKERS</span>
-                </div> */}
-
                 <div className="text-4xl font-bold my-3 text-[#1a1a1a] dark:text-white">
-                    Welcome to{' '}
-                    <span className="text-red-500 dark:text-red-400 text-[40px]">
-                        <Typical
-                            steps={['Make My Menu', 1500, '', 1000]}
-                            loop={Infinity}
-                            wrapper="span"
-                        />
-                    </span>
+                    Welcome to <span className="text-red-500 dark:text-red-400 text-[40px] ">Make My Menu</span>
                 </div>
+
+
 
 
                 <div className="text-lg my-4 text-[#414040] dark:text-[whitesmoke]">
-                    This is a simple website built with Next.js
+                    Innovative solution designed to empwer restaurant owners
                 </div>
                 <p className="max-w-[600px] my-2 text-[#414040] dark:text-[whitesmoke]">
-                    Website template and starter kit crafted to build fully functional mobile app landing pages and software websites.
+                    Equip restuarant owners with powerful tool that simplifies the process of creating and managing digital menus
                 </p>
 
                 <div className="flex items-center my-10 gap-5 flex-wrap">
