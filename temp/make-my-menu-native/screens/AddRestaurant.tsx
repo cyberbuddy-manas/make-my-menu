@@ -185,26 +185,28 @@ export default function App() {
         </View>
 
         {/* Segmented Buttons */}
-        <View style={styles.segmentedButtonsContainer}>
-          <SegmentedButtons
-            value={''}
-            onValueChange={(text) => {
-              setValues((val) => {
+        {
+          domainSuggestions.length ? <View style={styles.segmentedButtonsContainer}>
+            <SegmentedButtons
+              value={''}
+              onValueChange={(text) => {
+                setValues((val) => {
+                  return {
+                    ...val,
+                    subDomain: text,
+                  };
+                });
+              }}
+              buttons={domainSuggestions.map((val) => {
                 return {
-                  ...val,
-                  subDomain: text,
+                  value: val,
+                  label: val,
                 };
-              });
-            }}
-            buttons={domainSuggestions.map((val) => {
-              return {
-                value: val,
-                label: val,
-              };
-            })}
-            style={styles.segmentedButtons}
-          />
-        </View>
+              })}
+              style={styles.segmentedButtons}
+            />
+          </View> : <></>
+        }
 
         {/* Address Input */}
         <View style={styles.inputContainer}>
@@ -247,7 +249,7 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   backButton: {
-    marginTop: 40,
+    marginTop: 10,
     padding: 10,
     width: 40,
   },
@@ -292,7 +294,7 @@ const styles = StyleSheet.create({
     borderColor: '#ddd',
     borderWidth: 1,
     borderRadius: 8,
-    padding: 10,
+    padding: 0,
     fontSize: 16,
   },
   segmentedButtonsContainer: {

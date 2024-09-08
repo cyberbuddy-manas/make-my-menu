@@ -78,13 +78,14 @@ export const useAuthHook = () => {
       dispatch(storeCurrentUser(response?.data?.user));
       dispatch(storeToken(response?.data?.user?.authToken?.token));
 
-      Alert.alert('Success', response?.data?.message);
+      Alert.alert('Success', response?.data?.message || "Welcome to the Digital World!");
       navigation.reset({
         index: 0,
         routes: [{ name: AuthCheckRoute }],
       });
     } catch (error: any) {
-      Alert.alert('Error', error?.response?.data?.message ?? error?.message);
+      console.log('Error', error?.response?.data?.message ?? error?.message);
+      Alert.alert('Error', 'Wrong OTP Entered');
     }
   };
 

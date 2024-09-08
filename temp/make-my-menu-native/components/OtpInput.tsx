@@ -75,14 +75,15 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     justifyContent: 'center',
-    gap: 24,
+    gap: 16,
     alignItems: 'center',
     width: '100%',
+    padding: 10,
     marginVertical: 20,
   },
   input: {
-    width: 50,
-    height: 50,
+    // width: 50,
+    // height: 50,
     textAlign: 'center',
     fontSize: 18,
   },

@@ -95,7 +95,7 @@ export default function OtpScreen() {
             textAlign: 'center',
           }}
         >
-          email
+          {params.email ?? 'email'}
         </Text>
         {!!errors.otp && (
           <Chip
@@ -128,7 +128,7 @@ export default function OtpScreen() {
           buttonColor="#DC520C"
           style={{
             marginTop: 16,
-            borderRadius: 0,
+            borderRadius: 12,
           }}
           icon="login-variant"
           mode="contained"

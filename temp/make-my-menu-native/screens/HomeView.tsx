@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { StyleSheet, View, TouchableOpacity, Image, FlatList } from 'react-native';
+import { StyleSheet, View, TouchableOpacity, Image, FlatList, ScrollView, RefreshControl } from 'react-native';
 import { Button, Text } from 'react-native-paper';
 import { useAuthHook, useRestaurantHook } from '../api/hooks';
 import { useNavigation } from '@react-navigation/native';
@@ -44,7 +44,14 @@ const HomeScreen = () => {
     );
 
     return (
-        <View style={styles.container}>
+        <ScrollView style={styles.container} refreshControl={
+            <RefreshControl
+                refreshing={false}
+                onRefresh={() => {
+                    getRestaurants();
+                }}
+            />
+        }>
             {/* Logout Button */}
             <TouchableOpacity onPress={() => { logoutUser() }} style={styles.logoutButton}>
                 <Text style={styles.logoutText}>Logout</Text>
@@ -65,7 +72,7 @@ const HomeScreen = () => {
                 <Text style={styles.onboardText}>Onboard your Restaurant</Text>
             </TouchableOpacity>
 
-            <View>
+            <View style={{ marginBottom: 40 }}>
                 {/* Available Restaurants */}
                 <Text style={styles.availableText}>Available Restaurants</Text>
 
@@ -73,12 +80,11 @@ const HomeScreen = () => {
                 {restaurants.map((rest, index) => (
                     < TouchableOpacity key={rest._id} style={styles.restaurantButton} onPress={() => navigation.navigate(AddMenuItemRoute, rest)}>
                         {/* Ensure this is a valid string */}
-                        <Text style={styles.restaurantText}>hj{rest.restaurantName || 'Unnamed Restaurant'}</Text>
+                        <Text style={styles.restaurantText}>{rest.restaurantName || 'Unnamed Restaurant'}</Text>
                     </ TouchableOpacity>
                 ))}
             </View>
-
-        </View >
+        </ScrollView >
     );
 };
 
@@ -88,11 +94,12 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         paddingHorizontal: 20,
         paddingVertical: 10,
+        // paddingBottom: 50
     },
     logoutButton: {
         alignSelf: 'flex-end',
         marginRight: 10,
-        marginTop: 30,
+        marginTop: 40,
     },
     logoutText: {
         color: '#FF6F61',
