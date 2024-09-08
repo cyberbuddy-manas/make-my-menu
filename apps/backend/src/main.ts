@@ -7,15 +7,26 @@ import bodyParser from 'body-parser';
 import userRoutes from './routes/userRoutes';
 import restaurantRoutes from './routes/restaurantRoutes';
 import menuRoutes from './routes/menuRoutes';
-import {engine} from 'express-handlebars';
+import {engine,create} from 'express-handlebars';
 import mongoose from 'mongoose';
 import {authMiddleware} from './middlewares/authMiddleware';
 
 const app = express();
 app.use(cors());
 
+const hbs = create({
+  helpers: {
+      ifCond: function (v1, v2, options) {
+          if (v1 === v2) {
+              return options.fn(this);
+          }
+          return options.inverse(this);
+      }
+  }
+});
+
 // Handlebars setup
-app.engine('handlebars', engine());
+app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 app.set('views', path.join(__dirname, '/assets/templates/'));
 // Public folder setup
