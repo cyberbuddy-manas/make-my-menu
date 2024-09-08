@@ -7,7 +7,7 @@ export interface IRestaurant {
     // domain: string;
     restaurantName: string;
     address: string;
-    menu: object;
+    menu: object[];
     activeTemplate: string;
 }
 
@@ -38,7 +38,7 @@ const restaurantSchema = new Schema({
   restaurantName: { type: String},
   address: {type: String},
   // TODO: define the menu schema
-  menu: { type: Object },
+  menu: [{ type: Object }],
   // template Name is an already created template
   activeTemplate: { type: String },   
   isActive: { type: Boolean, default: true },

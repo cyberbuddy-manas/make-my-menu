@@ -1,116 +1,79 @@
-exports.data = {
-    pizzas: [
+exports.data = [
         {
             name: "Greek Pizza",
             description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt quos harum officia eaque nobis ut.",
             price: 22,
+            category: "pizzas",
             currency: "USD",
         },
         {
             name: "Pepperoni Pizza",
             description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt quos harum officia eaque nobis ut.",
             price: 18,
+            category: "pizzas",
             currency: "USD",
         },
         {
             name: "Margherita Pizza",
             description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt quos harum officia eaque nobis ut.",
             price: 16,
+            category: "pizzas",
             currency: "USD",
         },
         {
             name: "Hawaiian Pizza",
             description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt quos harum officia eaque nobis ut.",
             price: 20,
+            category: "pizzas",
             currency: "USD",
         },
         {
             name: "Veggie Pizza",
             description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt quos harum officia eaque nobis ut.",
             price: 19,
+            category: "pizzas",
             currency: "USD",
         },
         {
             name: "Meat Lovers Pizza",
             description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt quos harum officia eaque nobis ut.",
             price: 21,
+            category: "Others",
             currency: "USD",
-        }
-    ],
-    coffee: [
+        },
         {
             name: "Espresso",
             description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt quos harum officia eaque nobis ut.",
             price: 3,
+            category: "Others",
             currency: "USD",
         },
         {
             name: "Cappuccino",
             description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt quos harum officia eaque nobis ut.",
             price: 4,
+            category: "Others",
             currency: "USD",
         },
         {
-            name: "Latte",
+            name: "Meat Lovers Pizza",
+            description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt quos harum officia eaque nobis ut.",
+            price: 21,
+            category: "Indian",
+            currency: "USD",
+        },
+        {
+            name: "Espresso",
+            description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt quos harum officia eaque nobis ut.",
+            price: 3,
+            category: "Indian",
+            currency: "USD",
+        },
+        {
+            name: "Cappuccino",
             description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt quos harum officia eaque nobis ut.",
             price: 4,
-            currency: "USD",
-        },
-        {
-            name: "Mocha",
-            description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt quos harum officia eaque nobis ut.",
-            price: 5,
-            currency: "USD",
-        },
-        {
-            name: "Americano",
-            description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt quos harum officia eaque nobis ut.",
-            price: 4,
-            currency: "USD",
-        },
-        {
-            name: "Macchiato",
-            description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt quos harum officia eaque nobis ut.",
-            price: 4,
-            currency: "USD",
-        }
-    ],
-    noodles: [
-        {
-            name: "Spaghetti Bolognese",
-            description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt quos harum officia eaque nobis ut.",
-            price: 12,
-            currency: "USD",
-        },
-        {
-            name: "Penne Alfredo",
-            description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt quos harum officia eaque nobis ut.",
-            price: 14,
-            currency: "USD",
-        },
-        {
-            name: "Fettuccine Carbonara",
-            description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt quos harum officia eaque nobis ut.",
-            price: 15,
-            currency: "USD",
-        },
-        {
-            name: "Linguine Pesto",
-            description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt quos harum officia eaque nobis ut.",
-            price: 13,
-            currency: "USD",
-        },
-        {
-            name: "Ravioli Marinara",
-            description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt quos harum officia eaque nobis ut.",
-            price: 16,
-            currency: "USD",
-        },
-        {
-            name: "Lasagna",
-            description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt quos harum officia eaque nobis ut.",
-            price: 17,
+            category: "Indian",
             currency: "USD",
         }
     ]
-}
