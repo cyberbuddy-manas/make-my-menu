@@ -5,6 +5,7 @@ import SecondComponent from '../components/SecondComponent';
 import ThirdComponent from '../components/ThirdComponent';
 import FAQ from '../components/FAQComponent';
 import ThreePhotosComponent from '../components/ThreePhotosComponent';
+import Contact from '../components/Contact';
 
 const Home: React.FC = () => {
   return (
@@ -27,7 +28,7 @@ const Home: React.FC = () => {
       <ThirdComponent />
 
       <FAQ />
-
+      <Contact />
       <Footer />
     </div>
   );

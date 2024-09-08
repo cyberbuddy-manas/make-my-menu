@@ -46,7 +46,7 @@ const SecondComponent: React.FC = () => {
 
             <div className="flex justify-center items-center gap-10 flex-wrap px-4">
                 {items.map((item, index) => (
-                    <div className="px-4 py-8 shadow-md rounded-md bg-[white] dark:bg-gray-900 text-center max-w-[360px]" key={index}>
+                    <div className="px-4 py-8 shadow-md rounded-md bg-[white] hover:scale-110 transition-transform cursor-pointer dark:bg-gray-900 text-center max-w-[360px]" key={index}>
                         <div className="flex justify-center mb-4 text-blue-500">{item.icon}</div>
                         <h3 className="text-lg font-semibold mb-2 text-[#1a1a1a] dark:text-white">{item.heading}</h3>
                         <p className="text-center text-[#414040] dark:text-[whitesmoke]">{item.paragraph}</p>

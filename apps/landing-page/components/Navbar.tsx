@@ -4,8 +4,8 @@ import { IoMoonOutline } from "react-icons/io5";
 import { LuSun } from "react-icons/lu";
 
 const Navbar: React.FC = () => {
-    const [isOpen, setIsOpen] = useState < boolean > (false); // State to handle menu visibility
-    const [isDarkMode, setIsDarkMode] = useState < boolean > (false); // State to handle dark mode
+    const [isOpen, setIsOpen] = useState<boolean>(false); // State to handle menu visibility
+    const [isDarkMode, setIsDarkMode] = useState<boolean>(false); // State to handle dark mode
 
     useEffect(() => {
         // Check if dark mode is already enabled in localStorage
@@ -38,8 +38,9 @@ const Navbar: React.FC = () => {
             <div className="container mx-auto flex justify-between items-center">
                 {/* Left: Logo */}
                 <div className="flex-shrink-0 md:ml-10">
-                    <Link href="/" className="text-2xl font-bold">
-                        Logo
+                    <Link href="/" className="text-2xl font-bold flex items-center gap-3">
+                        <div><img className='jump2' src="/logo.png" alt="" height={40} width={40} /></div>
+                        <div className='text-[#1a1a1a] dark:text-[white]'>Make My Menu</div>
                     </Link>
                 </div>
 
