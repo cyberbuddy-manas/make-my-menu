@@ -1,14 +1,11 @@
 {
-    "comment": "add this after your exiting configs like firestore or functions",
-    "hosting": {
-        "public": "out",
-        "ignore": [
-            "firebase.json",
-            "**/.*",
-            "**/node_modules/**"
-        ],
-        "frameworksBackend": {
-            "region": "us-centeral1"
-        }
-    }
+  "comment": "add this after your exiting configs like firestore or functions",
+  "hosting": {
+    "public": "public",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
 }
