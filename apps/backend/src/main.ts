@@ -36,6 +36,7 @@ app.use(bodyParser.json({limit: '50mb'}));
 
 app.use(express.json());
 app.use('/api/user', userRoutes);
+// app.use('/api/restaurant', restaurantRoutes);
 app.use('/api/restaurant', authMiddleware, restaurantRoutes);
 // app.use('/api/generateMenu', generateMenuRoutes);
 app.use('/menu', menuRoutes);
