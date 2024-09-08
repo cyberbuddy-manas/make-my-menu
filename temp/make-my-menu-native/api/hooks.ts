@@ -15,6 +15,7 @@ import { AuthCheckRoute } from '../util/routes';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   clearGlobal,
+  storeApiLoading,
   storeCurrentUser,
   storeRestaurants,
   storeToken,
@@ -127,6 +128,7 @@ export const useRestaurantHook = () => {
       const response: ApiResponse<RestaurantResponse> = await OnBoardRestaurant(
         data
       );
+      // navigation.goBack();
       console.log('login', response?.data);
       getRestaurants();
     } catch (error: any) {
@@ -156,10 +158,19 @@ export const useRestaurantHook = () => {
   }
   async function menuToJSON(data: object, params: object) {
     try {
-      const response: ApiResponse<RestaurantResponse> = await MenuToJson(data);
-      console.log('restaurants', response?.data);
+      dispatch(storeApiLoading(true));
+      console.log('hiasdii');
+      const response: ApiResponse = await MenuToJson(data);
+      console.log(
+        'restaurants',
+        JSON.parse(
+          response?.data?.data?.response?.candidates[0]?.content?.parts[0]?.text
+        )
+      );
       // getRestaurants();
+      dispatch(storeApiLoading(false));
     } catch (error: any) {
+      dispatch(storeApiLoading(false));
       Alert.alert('Error', error?.message);
     }
   }

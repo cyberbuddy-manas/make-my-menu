@@ -31,4 +31,6 @@ const scrapeMenu = async () => {
     }
 };
 
+scrapeMenu();
+
 module.exports = scrapeMenu;
