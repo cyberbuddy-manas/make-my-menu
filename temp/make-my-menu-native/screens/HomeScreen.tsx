@@ -1,6 +1,10 @@
 import { useNavigation } from '@react-navigation/native';
 import { Button, Text } from 'react-native-paper';
-import { AddMenuItemRoute, MenuRoute, onBoardRestaurantRoute } from '../util/routes';
+import {
+  AddMenuItemRoute,
+  MenuRoute,
+  onBoardRestaurantRoute,
+} from '../util/routes';
 import { useEffect, useLayoutEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store/store';
@@ -28,7 +32,11 @@ export default function HomeScreen() {
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerRight: () => <Button onPress={logoutUser}>Logout</Button>,
+      headerRight: () => (
+        <Button textColor="#DC520C" onPress={logoutUser}>
+          Logout
+        </Button>
+      ),
     });
   }, [navigation]);
 
@@ -47,6 +55,7 @@ export default function HomeScreen() {
         }}
       >
         <Button
+          textColor="#DC520C"
           mode="outlined"
           icon="plus"
           onPress={() => {
@@ -59,13 +68,27 @@ export default function HomeScreen() {
       <View
         style={{
           marginTop: 16,
+          alignItems: 'center',
+          width: '100%',
         }}
       >
+        <Text
+          style={{
+            marginBottom: 16,
+          }}
+        >
+          Restaurants
+        </Text>
         {[...restaurants].map((rest, index) => {
           return (
             <Button
+              style={{
+                marginBottom: 16,
+                width: '100%',
+              }}
+              textColor="#DC520C"
+              mode="outlined"
               key={index}
-              mode="contained-tonal"
               onPress={() => {
                 navigation.navigate(AddMenuItemRoute, rest);
               }}
