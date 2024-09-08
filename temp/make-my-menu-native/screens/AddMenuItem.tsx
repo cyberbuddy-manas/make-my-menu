@@ -16,6 +16,9 @@ import {
 import { useRestaurantHook } from '../api/hooks';
 import { TouchableRipple } from 'react-native-paper';
 import * as ImagePicker from 'expo-image-picker';
+import { RootState } from '../store/store';
+import { useSelector } from 'react-redux';
+import QRCodeModal from '../components/QrCodeModal';
 
 interface MenuItem {
   id: number;
@@ -30,6 +33,7 @@ type MenuScreenRouteProp = RouteProp<
     params: {
       menu: MenuItem[];
       restaurantName?: string;
+      subDomain: string;
     };
   },
   'params'
@@ -48,10 +52,15 @@ type ImagePickerResult = {
 };
 
 export default function MenuScreen() {
+  const { imageApiLoading } = useSelector((state: RootState) => state.global);
+
+  const [modalVisible, setModalVisible] = useState(false);
+
   const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
   const route = useRoute<MenuScreenRouteProp>();
   const { params } = route;
-  const { updateRestaurant } = useRestaurantHook();
+  const link = `https://${params?.subDomain}.makemymenu.online/menu`; // Your link here
+  const { updateRestaurant, menuToJSON } = useRestaurantHook();
 
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [isEditing, setIsEditing] = useState<boolean>(false);
@@ -102,8 +111,6 @@ export default function MenuScreen() {
           base64: true,
         })) as ImagePickerResult;
 
-      console.log(result.assets[0]);
-
       if (!result.canceled) {
         if (
           result.assets[0].fileSize &&
@@ -112,6 +119,7 @@ export default function MenuScreen() {
           Alert.alert('Error', "Image can't be more than 10mb");
           return;
         }
+        menuToJSON({ baseImage: result?.assets[0]?.base64 }, params);
         // setImage(result.assets[0].base64); // Assuming `setImage` is a function that accepts the asset object.
       }
     } catch (error) {
@@ -126,7 +134,7 @@ export default function MenuScreen() {
         base64: true,
       })) as ImagePickerResult;
 
-      console.log(result);
+      //   console.log(result);
 
       if (!result.canceled) {
         if (
@@ -136,7 +144,7 @@ export default function MenuScreen() {
           Alert.alert('Error', "Image can't be more than 10mb");
           return;
         }
-        // setImage(result.assets[0].base64);
+        menuToJSON({ baseImage: result?.assets[0]?.base64 }, params);
       }
     } catch (error) {
       Alert.alert('Error', 'Unable to Open Camera');
@@ -186,6 +194,11 @@ export default function MenuScreen() {
 
   return (
     <View style={styles.container}>
+      <QRCodeModal
+        visible={modalVisible}
+        onDismiss={() => setModalVisible(false)}
+        link={link}
+      />
       <TouchableOpacity
         style={styles.backButton}
         onPress={() => {
@@ -196,7 +209,11 @@ export default function MenuScreen() {
       </TouchableOpacity>
 
       <View style={styles.logoContainer}>
-        <TouchableRipple onPress={() => {}}>
+        <TouchableRipple
+          onPress={() => {
+            setModalVisible(true);
+          }}
+        >
           <Image source={require('../assets/Logo.png')} style={styles.logo} />
         </TouchableRipple>
       </View>

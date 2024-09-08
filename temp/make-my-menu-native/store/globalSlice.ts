@@ -5,6 +5,7 @@ const initialValue = {
   token: '',
   currentUser: {},
   restaurants: [],
+  imageApiLoading: false,
 };
 
 const globalSlice = createSlice({
@@ -23,9 +24,17 @@ const globalSlice = createSlice({
     storeRestaurants: (state, action) => {
       state.restaurants = action.payload;
     },
+    storeApiLoading: (state, action) => {
+      state.imageApiLoading = action.payload;
+    },
   },
 });
 
-export const { storeCurrentUser, clearGlobal, storeToken, storeRestaurants } =
-  globalSlice.actions;
+export const {
+  storeCurrentUser,
+  clearGlobal,
+  storeToken,
+  storeRestaurants,
+  storeApiLoading,
+} = globalSlice.actions;
 export default globalSlice.reducer;
