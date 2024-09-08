@@ -11,9 +11,11 @@ import {
   TextInput,
   ScrollView,
   Pressable,
+  Alert,
 } from 'react-native';
 import { useRestaurantHook } from '../api/hooks';
 import { TouchableRipple } from 'react-native-paper';
+import * as ImagePicker from 'expo-image-picker';
 
 interface MenuItem {
   id: number;
@@ -32,12 +34,23 @@ type MenuScreenRouteProp = RouteProp<
   },
   'params'
 >;
+type ImagePickerResult = {
+  canceled: boolean;
+  assets: {
+    uri: string;
+    fileName?: string;
+    fileSize?: number;
+    type?: string;
+    width?: number;
+    height?: number;
+    base64?: string;
+  }[];
+};
 
 export default function MenuScreen() {
   const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
   const route = useRoute<MenuScreenRouteProp>();
   const { params } = route;
-
   const { updateRestaurant } = useRestaurantHook();
 
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
@@ -80,6 +93,54 @@ export default function MenuScreen() {
     setIsEditing(true);
     setSelectedItemId(item.id);
     setIsModalVisible(true);
+  };
+  const handlePickImage = async (): Promise<void> => {
+    try {
+      let result: ImagePickerResult =
+        (await ImagePicker.launchImageLibraryAsync({
+          quality: 1,
+          base64: true,
+        })) as ImagePickerResult;
+
+      console.log(result.assets[0]);
+
+      if (!result.canceled) {
+        if (
+          result.assets[0].fileSize &&
+          result.assets[0].fileSize > 10 * 1024 * 1024
+        ) {
+          Alert.alert('Error', "Image can't be more than 10mb");
+          return;
+        }
+        // setImage(result.assets[0].base64); // Assuming `setImage` is a function that accepts the asset object.
+      }
+    } catch (error) {
+      Alert.alert('Error', 'Unable to Pick Image');
+    }
+  };
+
+  const handleCameraImage = async (): Promise<void> => {
+    try {
+      let result: ImagePickerResult = (await ImagePicker.launchCameraAsync({
+        quality: 1,
+        base64: true,
+      })) as ImagePickerResult;
+
+      console.log(result);
+
+      if (!result.canceled) {
+        if (
+          result.assets[0].fileSize &&
+          result.assets[0].fileSize > 10 * 1024 * 1024
+        ) {
+          Alert.alert('Error', "Image can't be more than 10mb");
+          return;
+        }
+        // setImage(result.assets[0].base64);
+      }
+    } catch (error) {
+      Alert.alert('Error', 'Unable to Open Camera');
+    }
   };
 
   const saveNewItem = () => {
