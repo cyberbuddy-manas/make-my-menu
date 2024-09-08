@@ -10,7 +10,7 @@ import { useEffect, useLayoutEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store/store';
 import { useAuthHook, useRestaurantHook } from '../api/hooks';
-import { ScrollView, View } from 'react-native';
+import { RefreshControl, ScrollView, View } from 'react-native';
 
 export default function HomeScreen() {
   const {
@@ -48,6 +48,14 @@ export default function HomeScreen() {
         flexGrow: 1,
         padding: 24,
       }}
+      refreshControl={
+        <RefreshControl
+          refreshing={false}
+          onRefresh={() => {
+            getRestaurants();
+          }}
+        />
+      }
     >
       <View
         style={{

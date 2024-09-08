@@ -161,12 +161,29 @@ export const useRestaurantHook = () => {
       dispatch(storeApiLoading(true));
       console.log('hiasdii');
       const response: ApiResponse = await MenuToJson(data);
-      console.log(
-        'restaurants',
-        JSON.parse(
-          response?.data?.data?.response?.candidates[0]?.content?.parts[0]?.text
-        )
-      );
+      const menuNew = [
+        ...(params?.menu ?? []),
+        ...JSON.parse(
+          response?.data?.data?.response?.candidates[0]?.content?.parts[0]?.text?.slice(
+            7,
+            -3
+          )
+        )?.map((item) => {
+          console.log(item);
+          return {
+            ...item,
+            description: '',
+            id: new Date(),
+            ...(item?.item ? { name: item?.item } : {}),
+          };
+        }),
+      ];
+      console.log('restaurants', menuNew);
+      await updateRestaurant({
+        ...params,
+        menu: menuNew,
+      });
+      Alert.alert('Success', 'Done Convertion');
       // getRestaurants();
       dispatch(storeApiLoading(false));
     } catch (error: any) {

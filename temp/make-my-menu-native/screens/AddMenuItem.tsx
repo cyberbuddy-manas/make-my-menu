@@ -14,7 +14,7 @@ import {
   Alert,
 } from 'react-native';
 import { useRestaurantHook } from '../api/hooks';
-import { TouchableRipple } from 'react-native-paper';
+import { IconButton, TouchableRipple } from 'react-native-paper';
 import * as ImagePicker from 'expo-image-picker';
 import { RootState } from '../store/store';
 import { useSelector } from 'react-redux';
@@ -182,7 +182,7 @@ export default function MenuScreen() {
       <Text style={styles.itemName}>{item.name}</Text>
       <Text style={styles.itemDescription}>{item.description}</Text>
       <Text style={styles.itemCategory}>Category: {item.category}</Text>
-      <Text style={styles.itemPrice}>₹ {item.price}</Text>
+      <Text style={styles.itemPrice}>$ {item.price}</Text>
       <TouchableOpacity
         style={styles.editButton}
         onPress={() => openEditItemModal(item)}
@@ -239,6 +239,14 @@ export default function MenuScreen() {
           </TouchableOpacity>
         }
       />
+      <View
+        style={{
+          flexDirection: 'row',
+        }}
+      >
+        <IconButton icon={'attachment'} onPress={handlePickImage} />
+        <IconButton icon={'camera'} onPress={handleCameraImage} />
+      </View>
 
       <TouchableOpacity style={styles.publishButton} onPress={handlePublish}>
         <Text style={styles.publishButtonText}>Publish →</Text>
@@ -287,7 +295,7 @@ export default function MenuScreen() {
           </TouchableOpacity>
           {dropdownVisible && (
             <View style={styles.dropdown}>
-              {['Pizza', 'Pasta', 'Burgers', 'Drinks', 'other'].map(
+              {['Pizza', 'Pasta', 'Burgers', 'Drinks', 'Other'].map(
                 (category) => (
                   <TouchableOpacity
                     key={category}
