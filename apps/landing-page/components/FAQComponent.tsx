@@ -6,33 +6,30 @@ interface FaqItem {
 }
 
 const Faq = () => {
-    const [activeIndex, setActiveIndex] = useState < number | null > (null);
+    const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
     const faqs: FaqItem[] = [
         {
-            question: "What is Next.js?",
-            answer: "Next.js is a React framework that enables server-side rendering and static website generation."
+            question: "What is Make My Menu ?",
+            answer: "Make My Menu is a free platform for restaurant owners to create and manage their menus online."
         },
         {
-            question: "What is Tailwind CSS?",
-            answer: "Tailwind CSS is a utility-first CSS framework for rapidly building custom designs."
+            question: "Is Make My Menu free to use ?",
+            answer: "Yes Make My Menu is absolutely free to use."
         },
         {
-            question: "How does server-side rendering work?",
-            answer: "Server-side rendering renders the webpage on the server, improving SEO and performance."
+            question: "How does Make My Menu help restuarant owners ?",
+            answer: "Restaurant Owners can create an online menu by choosing a template and then generating menus."
         },
         {
-            question: "What is React?",
-            answer: "React is a JavaScript library for building user interfaces."
+            question: "Why should I use Make My Menu ?",
+            answer: "Make My Menu is a free platform that allows restaurant owners to create and manage their menus online."
         },
         {
-            question: "What is the benefit of static site generation?",
-            answer: "Static site generation allows pre-rendering pages at build time, improving load speed."
+            question: "Is Make My Menu hard to use ?",
+            answer: "No, Make My Menu's interface is user-friendly and easy to use."
         },
-        {
-            question: "How do I install Next.js?",
-            answer: "You can install Next.js by running `npx create-next-app` in your terminal."
-        }
+
     ];
 
     const toggleFaq = (index: number) => {
@@ -58,7 +55,7 @@ const Faq = () => {
                         </span>
                     </button>
                     {activeIndex === index && (
-                        <p className="my-4 text-gray-600 dark:text-[#9c9a9a]">
+                        <p className="my-4 text-gray-600 dark:text-[#9c9a9a] text-[15px]">
                             {faq.answer}
                         </p>
                     )}

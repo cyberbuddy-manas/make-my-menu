@@ -10,13 +10,13 @@ const ThirdComponent: React.FC = () => {
             <div>
                 <div className="text-2xl font-bold dark:text-blue-500">Track Audience Activities</div>
                 <div className="text-4xl font-bold my-3 text-[#1a1a1a] dark:text-white">
-                    Welcome to <span className="text-red-500 dark:text-red-400 text-[40px]">MENU MAKERS</span>
+                    Welcome to <span className="text-red-500 dark:text-red-400 text-[40px]">MAKE MY MENUS</span>
                 </div>
                 <div className="text-lg my-4 text-[#414040] dark:text-[whitesmoke]">
-                    This is a simple website built with Next.js
+                    Your go-to solution for creating and managing restaurant menus effortlessly
                 </div>
                 <p className="max-w-[600px] my-2 text-[#414040] dark:text-[whitesmoke]">
-                    Schedule your posts for times when your audience is most active. Choose from our best-time predictions, or create your own publishing schedule.
+                    Our platform allows you to schedule and publish your menus at optimal times based on audience activity.
                 </p>
 
                 <ul className="space-y-4 text-left text-[#414040] dark:text-gray-400">
@@ -24,7 +24,7 @@ const ThirdComponent: React.FC = () => {
                         <svg className="flex-shrink-0 w-3.5 h-3.5 text-green-500 dark:text-green-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 12">
                             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 5.917 5.724 10.5 15 1.5" />
                         </svg>
-                        <span>Individual configuration</span>
+                        <span>Customizable Scheduling</span>
                     </li>
                     <li className="flex items-center space-x-3 rtl:space-x-reverse">
                         <svg className="flex-shrink-0 w-3.5 h-3.5 text-green-500 dark:text-green-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 12">
@@ -36,19 +36,19 @@ const ThirdComponent: React.FC = () => {
                         <svg className="flex-shrink-0 w-3.5 h-3.5 text-green-500 dark:text-green-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 12">
                             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 5.917 5.724 10.5 15 1.5" />
                         </svg>
-                        <span>Team size: <span className="font-semibold text-gray-900 dark:text-white">1 developer</span></span>
+                        <span>Individual Configuration</span>
                     </li>
                     <li className="flex items-center space-x-3 rtl:space-x-reverse">
                         <svg className="flex-shrink-0 w-3.5 h-3.5 text-green-500 dark:text-green-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 12">
                             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 5.917 5.724 10.5 15 1.5" />
                         </svg>
-                        <span>Premium support: <span className="font-semibold text-gray-900 dark:text-white">6 months</span></span>
+                        <span>Support & Updates</span>
                     </li>
                     <li className="flex items-center space-x-3 rtl:space-x-reverse">
                         <svg className="flex-shrink-0 w-3.5 h-3.5 text-green-500 dark:text-green-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 12">
                             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 5.917 5.724 10.5 15 1.5" />
                         </svg>
-                        <span>Free updates: <span className="font-semibold text-gray-900 dark:text-white">6 months</span></span>
+                        <span>Menu Analytics</span>
                     </li>
                 </ul>
             </div>
