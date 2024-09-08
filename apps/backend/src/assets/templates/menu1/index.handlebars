@@ -27,8 +27,31 @@
     <a href="#" class="button" data-target="noodlesMenu">Noodles</a>
   </div>
 
+  <div class="wrapper"></div>
+    <h2>Our Menu</h2>
+    <div class="buttons-container">
+      {{#each category}}
+        <a href="#" class="button" data-target="{{@key}}Menu">{{@key}}</a>
+      {{/each}}
+    </div>
+
+    {{#each menu}}
+      <div class="menu" id="{{@key}}Menu">
+        {{#each this}}
+        <div class="item">
+          <div class="item__header">
+            <h3 class="item__title">{{name}}</h3>
+            <span class="item__dots"></span>
+            <span class="item__price">${{price}}</span>
+          </div>
+          <p class="item__description">{{description}}</p>
+        </div>
+        {{/each}}
+      </div>
+    {{/each}}
+  </div> <!-- End Wrapper -->
   <!-- Start Pizza Menu -->
-  <div class="menu menu--is-visible" id="pizzaMenu">
+  {{!-- <div class="menu menu--is-visible" id="pizzaMenu">
     <div class="item">
       <div class="item__header">
         <h3 class="item__title">Greek Pizza</h3>
@@ -142,7 +165,7 @@
       </div>
       <p class="item__description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt quos harum officia eaque nobis ut.</p>
     </div>
-  </div> <!-- End Noodles Menu -->
+  </div> <!-- End Noodles Menu --> --}}
 
 </div> <!-- End Wrapper -->
 <!-- partial -->
