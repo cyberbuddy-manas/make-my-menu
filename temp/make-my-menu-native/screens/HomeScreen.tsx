@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import { Button, Text } from 'react-native-paper';
-import { MenuRoute, onBoardRestaurantRoute } from '../util/routes';
+import { AddMenuItemRoute, MenuRoute, onBoardRestaurantRoute } from '../util/routes';
 import { useEffect, useLayoutEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store/store';
@@ -67,7 +67,7 @@ export default function HomeScreen() {
               key={index}
               mode="contained-tonal"
               onPress={() => {
-                navigation.navigate(MenuRoute, rest);
+                navigation.navigate(AddMenuItemRoute, rest);
               }}
             >
               {rest?.restaurantName}

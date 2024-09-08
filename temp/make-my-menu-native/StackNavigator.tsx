@@ -55,9 +55,9 @@ const AuthStack = () => {
 const AppStack = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name={AddMenuItemRoute} component={AddMenuItem} options={{ headerShown: false }} />
-      <Stack.Screen name={AddRestaurantRoute} component={AddRestaurant} options={{ headerShown: false }} />
       <Stack.Screen name={HomeRoute} component={HomeScreen} />
+      <Stack.Screen name={AddRestaurantRoute} component={AddRestaurant} options={{ headerShown: false }} />
+      <Stack.Screen name={AddMenuItemRoute} component={AddMenuItem} options={{ headerShown: false }} />
       <Stack.Screen
         name={onBoardRestaurantRoute}
         component={OnBoardRestaurantScreen}

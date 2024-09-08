@@ -1,72 +1,196 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, View, FlatList, TouchableOpacity, Image } from 'react-native';
+import { useRoute, RouteProp } from '@react-navigation/native';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, Text, View, FlatList, TouchableOpacity, Image, Modal, TextInput, ScrollView } from 'react-native';
+import { useRestaurantHook } from '../api/hooks';
+
+interface MenuItem {
+    id: number;
+    name: string;
+    price: number;
+    description: string;
+    category: string;
+}
+
+type MenuScreenRouteProp = RouteProp<
+    {
+        params: {
+            menu: MenuItem[];
+            restaurantName?: string;
+        };
+    },
+    'params'
+>;
 
 export default function MenuScreen() {
-    const [menuItems, setMenuItems] = useState([
-        { id: '1', name: 'Item 1', description: 'This is the description of the item.', price: 1200 },
-        { id: '2', name: 'Item 1', description: 'This is the description of the item.', price: 1200 },
-        { id: '3', name: 'Item 1', description: 'This is the description of the item.', price: 1200 },
-        { id: '4', name: 'Item 1', description: 'This is the description of the item.', price: 1200 },
-        { id: '5', name: 'Item 1', description: 'This is the description of the item.', price: 1200 },
-        { id: '6', name: 'Item 1', description: 'This is the description of the item.', price: 1200 },
-    ]);
+    const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
+    const route = useRoute<MenuScreenRouteProp>();
+    const { params } = route;
 
-    // Add a new item to the menu
-    const addItem = () => {
-        setMenuItems([...menuItems, {
-            id: (menuItems.length + 1).toString(),
-            name: 'Item 1',
-            description: 'This is the description of the item.',
-            price: 1200,
-        }]);
+    const { updateRestaurant } = useRestaurantHook();
+
+    const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+    const [isEditing, setIsEditing] = useState<boolean>(false);
+    const [selectedItemId, setSelectedItemId] = useState<number | null>(null);
+
+    const [dropdownVisible, setDropdownVisible] = useState<boolean>(false); // For custom dropdown visibility
+
+    const [newMenuItem, setNewMenuItem] = useState<MenuItem>({
+        id: Date.now(),
+        name: '',
+        description: '',
+        price: 0,
+        category: '',
+    });
+
+    useEffect(() => {
+        if (params?.menu) {
+            const tempMenus = params?.menu.map((me) => {
+                return me?.id ? me : { ...me, id: new Date().getTime() };
+            });
+            setMenuItems(tempMenus);
+        }
+    }, [params]);
+
+    const openAddItemModal = () => {
+        setNewMenuItem({ id: Date.now(), name: '', description: '', price: 0, category: '' });
+        setIsEditing(false);
+        setIsModalVisible(true);
     };
 
-    const renderItem = ({ item }) => (
+    const openEditItemModal = (item: MenuItem) => {
+        setNewMenuItem(item);
+        setIsEditing(true);
+        setSelectedItemId(item.id);
+        setIsModalVisible(true);
+    };
+
+    const saveNewItem = () => {
+        if (isEditing && selectedItemId !== null) {
+            setMenuItems((prevItems) =>
+                prevItems.map((item) =>
+                    item.id === selectedItemId ? newMenuItem : item
+                )
+            );
+        } else {
+            const newItem: MenuItem = {
+                id: Date.now(),
+                name: newMenuItem.name,
+                description: newMenuItem.description,
+                price: newMenuItem.price,
+                category: newMenuItem.category || "other",
+            };
+            setMenuItems([...menuItems, newItem]);
+        }
+        setIsModalVisible(false);
+    };
+
+    const handlePublish = () => {
+        updateRestaurant({ ...params, menu: menuItems });
+    };
+
+    const renderItem = ({ item }: { item: MenuItem }) => (
         <View style={styles.menuItem}>
             <Text style={styles.itemName}>{item.name}</Text>
             <Text style={styles.itemDescription}>{item.description}</Text>
+            <Text style={styles.itemCategory}>Category: {item.category}</Text>
             <Text style={styles.itemPrice}>₹ {item.price}</Text>
+            <TouchableOpacity style={styles.editButton} onPress={() => openEditItemModal(item)}>
+                <Text style={styles.editButtonText}>Edit</Text>
+            </TouchableOpacity>
         </View>
     );
 
     return (
         <View style={styles.container}>
-            {/* Back Button */}
             <TouchableOpacity style={styles.backButton}>
                 <Text style={styles.backButtonText}>←</Text>
             </TouchableOpacity>
 
-            {/* Logo */}
             <View style={styles.logoContainer}>
                 <Image
-                    source={require('../assets/Logo.png')} // Replace with your logo
+                    source={require('../assets/Logo.png')}
                     style={styles.logo}
                 />
             </View>
 
-            {/* Title and Subtitle */}
             <View style={styles.header}>
                 <Text style={styles.title}>Create Durga’s Menu</Text>
                 <Text style={styles.subtitle}>Customize your Dishes and Menu Layout</Text>
             </View>
 
-            {/* Menu Items List */}
             <FlatList
                 data={menuItems}
                 renderItem={renderItem}
-                keyExtractor={item => item.id}
+                keyExtractor={(item) => item.id.toString()}
                 numColumns={2}
                 ListFooterComponent={
-                    <TouchableOpacity style={styles.addItemButton} onPress={addItem}>
+                    <TouchableOpacity style={styles.addItemButton} onPress={openAddItemModal}>
                         <Text style={styles.addItemText}>+ Add Item</Text>
                     </TouchableOpacity>
                 }
             />
 
-            {/* Publish Button */}
-            <TouchableOpacity style={styles.publishButton}>
+            <TouchableOpacity style={styles.publishButton} onPress={handlePublish}>
                 <Text style={styles.publishButtonText}>Publish →</Text>
             </TouchableOpacity>
+
+            {/* Modal for adding/editing items */}
+            <Modal
+                visible={isModalVisible}
+                animationType="slide"
+                onRequestClose={() => setIsModalVisible(false)}
+                transparent={true}
+            >
+                <View style={styles.modalContainer}>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Menu Item Name"
+                        value={newMenuItem.name}
+                        onChangeText={(text) => setNewMenuItem({ ...newMenuItem, name: text })}
+                    />
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Description"
+                        value={newMenuItem.description}
+                        onChangeText={(text) => setNewMenuItem({ ...newMenuItem, description: text })}
+                    />
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Price"
+                        keyboardType="numeric"
+                        value={newMenuItem.price.toString()}
+                        onChangeText={(text) => setNewMenuItem({ ...newMenuItem, price: parseFloat(text) })}
+                    />
+
+                    {/* Custom Dropdown for Category Selection */}
+                    <TouchableOpacity
+                        style={styles.input}
+                        onPress={() => setDropdownVisible(!dropdownVisible)}
+                    >
+                        <Text>{newMenuItem.category || 'Select Category'}</Text>
+                    </TouchableOpacity>
+                    {dropdownVisible && (
+                        <View style={styles.dropdown}>
+                            {['Pizza', 'Pasta', 'Burgers', 'Drinks',"other"].map((category) => (
+                                <TouchableOpacity
+                                    key={category}
+                                    onPress={() => {
+                                        setNewMenuItem({ ...newMenuItem, category });
+                                        setDropdownVisible(false);
+                                    }}
+                                    style={styles.dropdownItem}
+                                >
+                                    <Text>{category}</Text>
+                                </TouchableOpacity>
+                            ))}
+                        </View>
+                    )}
+
+                    <TouchableOpacity style={styles.saveButton} onPress={saveNewItem}>
+                        <Text style={styles.saveButtonText}>{isEditing ? 'Save Changes' : 'Save Item'}</Text>
+                    </TouchableOpacity>
+                </View>
+            </Modal>
         </View>
     );
 }
@@ -119,6 +243,7 @@ const styles = StyleSheet.create({
         padding: 10,
         margin: 10,
         alignItems: 'center',
+        position: 'relative',
     },
     itemName: {
         fontSize: 16,
@@ -131,10 +256,28 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         marginBottom: 10,
     },
+    itemCategory: {
+        fontSize: 14,
+        color: '#999',
+        marginBottom: 10,
+    },
     itemPrice: {
         fontSize: 16,
         fontWeight: 'bold',
         color: '#000',
+    },
+    editButton: {
+        position: 'absolute',
+        right: 10,
+        top: 10,
+        backgroundColor: '#FF6F61',
+        paddingVertical: 5,
+        paddingHorizontal: 10,
+        borderRadius: 8,
+    },
+    editButtonText: {
+        color: '#fff',
+        fontWeight: 'bold',
     },
     addItemButton: {
         flex: 1,
@@ -153,13 +296,53 @@ const styles = StyleSheet.create({
     publishButton: {
         backgroundColor: '#FF6F61',
         paddingVertical: 15,
-        borderRadius: 12,
-        marginTop: 20,
+        paddingHorizontal: 30,
+        borderRadius: 8,
         alignItems: 'center',
+        marginVertical: 20,
     },
     publishButtonText: {
-        fontSize: 16,
+        color: '#fff',
+        fontSize: 18,
+        fontWeight: 'bold',
+    },
+    modalContainer: {
+        flex: 1,
+        backgroundColor: 'rgba(0,0,0,0.5)',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    input: {
+        backgroundColor: '#fff',
+        padding: 10,
+        marginVertical: 10,
+        width: '80%',
+        borderRadius: 8,
+    },
+    dropdown: {
+        backgroundColor: '#fff',
+        borderWidth: 1,
+        borderColor: '#ddd',
+        borderRadius: 8,
+        position: 'absolute',
+        // top: 140, // Adjust based on the location in your layout
+        width: '80%',
+        zIndex: 1,
+    },
+    dropdownItem: {
+        padding: 10,
+        borderBottomWidth: 1,
+        borderBottomColor: '#ddd',
+    },
+    saveButton: {
+        backgroundColor: '#FF6F61',
+        padding: 15,
+        borderRadius: 8,
+        marginTop: 20,
+    },
+    saveButtonText: {
         color: '#fff',
         fontWeight: 'bold',
+        fontSize: 16,
     },
 });
